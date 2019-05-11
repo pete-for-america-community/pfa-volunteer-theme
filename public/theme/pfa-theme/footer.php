@@ -71,6 +71,12 @@ global $theme_options;
 </footer>
 <div class="divider bg-secondary solid"></div>
 <!-- Modals -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwRVrS8bDrcRWsYblL-f-EX0i1ECVfkSY&callback=initMap&libraries=places">
+</script>
+<script type="text/javascript" src="wp-content/themes/pfa-theme/js/map.js"></script>
+<script type="text/javascript" src="wp-content/themes/pfa-theme/js/scripts.js"></script>
 
 <!-- wp_footer() output -->
 <?php wp_footer(); ?>

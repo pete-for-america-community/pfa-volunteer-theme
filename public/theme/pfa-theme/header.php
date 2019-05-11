@@ -8,6 +8,7 @@ global $theme_options;
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="wp-content/themes/pfa-theme/style.css">
     <!-- wp_head() --><?php wp_head(); ?><!-- /wp_head() -->
 </head>
 
@@ -25,8 +26,7 @@ global $theme_options;
             <!-- Logo -->
             <div class="navbar-brand nav-logo">
                 <a href="<?php bloginfo('url'); ?>">
-                    <!--<img src="<?php echo get_template_directory_uri() ?>/img/pfa-logo.svg" class="logo svg img-responsive">-->
-                    PFA
+                    <img src="<?php echo get_template_directory_uri() ?>/img/pfa-logo.svg" class="logo svg img-responsive">
                 </a>
             </div>
 
@@ -73,10 +73,5 @@ global $theme_options;
         </div><!-- /.nav-wrapper #navbarSupportedContent -->
 
     </nav>
-
-    <div class="site-announcement bg-white">
-        <p>Announcement Bar</p>
-    </div>
-
 </header><!-- /.sticky -->
 <!-- /header.php -->

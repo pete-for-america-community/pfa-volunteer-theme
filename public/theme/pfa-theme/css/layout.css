@@ -17,7 +17,6 @@ header {
   width: 100%;
 }
 main {
-  margin-top: 160px;
 }
 /* Main nav height items */
 nav {
@@ -60,34 +59,7 @@ nav {
   width: calc(80px - 1rem);
   height: auto;
 }
-.site-announcement {
-  height: 80px;
-  align-items: center;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-.site-announcement:before {
-  top: -2px;
-}
-.site-announcement:after {
-  top: 100%;
-}
-.site-announcement:before,
-.site-announcement:after {
-  height: 2px;
-  position: absolute;
-  width: 100%;
-  display: block;
-  content: "";
-  background: #989898;
-  z-index: 5;
-}
-.site-announcement p {
-  padding-left: 50px;
-  margin-bottom: 0;
-}
+
 /* Reusable Components */
 .divider {
   position: relative;
@@ -170,7 +142,6 @@ section {
 
 /* Action network area */
 section.action-network {
-  height: 870px;
   position: relative;
   flex-direction: column;
 }

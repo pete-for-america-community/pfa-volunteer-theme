@@ -47,34 +47,25 @@ $theme_options = get_option( 'theme_options' );
         </div>
     </section>
 
-    <div class="divider bg-secondary solid"></div>
-
     <section class="action-network bg-white">
-        <div class="header">
-        <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-12">
-                    <h2 class="title">Find Your Local Group</h2>
-                        <div class="interface">
-                            <p>Map Controls Placeholder (this section will house a map, long term)</p>
-                        </div>
+        <div class="container-fluid mt-3 my-4">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h2 class="title">Find Events Near You</h2>
+                    <div class="interface">
+                        <p>Map Controls Placeholder</p>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="map">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-10 offset-sm-1">
-                        <?php echo do_shortcode('[actionnetwork id=3]'); ?>
-                    </div>
+        <div class="map-wrapper container-fluid">
+            <div class="row h-100">
+                <div class="map-container col-xs-12 h-100 w-100">
+                    <div id="map"></div>
                 </div>
             </div>
         </div>
     </section>
-
-    <div class="divider bg-secondary solid"></div>
 
     <section class="cta values bg-white">
         <div class="cta-image">
@@ -98,8 +89,6 @@ $theme_options = get_option( 'theme_options' );
 
     </section>
 
-    <div class="divider bg-secondary solid"></div>
-
     <section class="cta categories bg-white">
         <div class="content-wrapper">
             <div class="content">
@@ -122,8 +111,6 @@ $theme_options = get_option( 'theme_options' );
             <img src="https://picsum.photos/930/700" class="img-responsive" />
         </div>
     </section>
-
-    <div class="divider bg-secondary solid"></div>
 
     <section class="feed bg-white">
         <h2 class="title">PFA On The Twitters</h2>
@@ -161,8 +148,6 @@ $theme_options = get_option( 'theme_options' );
 
     </section>
 
-    <div class="divider bg-secondary solid"></div>
-
     <section class="action bg-white">
         <div class="slider bg-primary">
             <div class="background"></div>
@@ -176,8 +161,6 @@ $theme_options = get_option( 'theme_options' );
             </div>
         </div>
     </section>
-
-    <div class="divider bg-secondary solid"></div>
 
 </main>
 
