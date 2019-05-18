@@ -7,3 +7,21 @@
   img {
   width: 70%;
 }
+#hero-banner .elementor-widget-wrap {
+  height: 80vh;
+  max-height: 620px;
+  padding-bottom: 75px;
+}
+#hero-banner h1 {
+  font-size: 4.75rem;
+}
+#hero-banner p {
+  font-size: 1.25rem;
+}
+#signup-form-wrapper {
+  margin-top: 40px;
+}
+/* Contact Form */
+#can-form-area-pete-for-america-community-signup h2 {
+  display: none;
+}
