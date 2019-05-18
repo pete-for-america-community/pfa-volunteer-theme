@@ -1,14 +1,21 @@
-=== Hello Elementor ===
-
-Contributors: elemntor, KingYes, ariel.k, jzaltzberg, mati1000, bainternet
+=== PFA Community Theme ===
+Contributors: Brian Guggenheim (bguggs), Lori Boyer (coders4pete), Lynn Nichols (lynnmg), Jared Parmenter (jagp), Amy Rosenthal (Amy)
 Requires at least: WordPress 4.7
 Tested up to: WordPress 5.2
-Stable tag: 2.0.2
-Version: 2.0.2
+Stable tag: 1.0.0
+Version: 1.0.0
 Requires PHP: 5.4
 License: GNU General Public License v3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Tags: flexible-header, accessibility-ready, custom-colors, custom-menu, custom-logo, editor-style, featured-images, rtl-language-support, threaded-comments, translation-ready
+
+
+
+ /* Original "Hello Elementor" Theme Readme Preserved for License and Politeness */
+=== Hello Elementor ===
+
+Contributors: elemntor, KingYes, ariel.k, jzaltzberg, mati1000, bainternet
+
 
 A lightweight, plain-vanilla theme for Elementor page builder.
 
