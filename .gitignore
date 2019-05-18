@@ -1,2 +1,3 @@
-private/
+private/*
 .idea/
+!*private/about this folder.txt
