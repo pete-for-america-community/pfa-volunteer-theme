@@ -195,6 +195,7 @@ function load_scripts() {
 	//Load global site CSS, this will be SASS long term
 	wp_enqueue_style( 'site-layout', get_template_directory_uri() . '/css/layout.css', array( ), filemtime( get_template_directory() . '/css/layout.css' ) );
 	wp_enqueue_style( 'text', get_template_directory_uri() . '/css/text.css', array( ), filemtime( get_template_directory() . '/css/text.css' ) );
+	wp_enqueue_style( 'action-network-embed', get_template_directory_uri() . '/css/better-action-network-embed.css', array( ), filemtime( get_template_directory() . '/css/text.css' ) );
 
 	//Allow a few different colors stylesheets for testing
 	//wp_enqueue_style( 'pfa-colors-default', get_template_directory_uri() . '/css/pfa-colors-default.css', array( ) );
