@@ -107,7 +107,7 @@ function theme_setup() {
 		'/lib/restore-blog-page-content-editor.php',            // Restores Content Editor To Whichever Post is Marked 'Page For Posts'
 		'/lib/disable-wpautop.php',                             // Forces WP to not auto-format line breaks with <p> tags unnecessarily
 		'/lib/add-defer-preload-and-async-to-scripts.php',      // Intercepts normal HTMl output for scripts, adding the defer attribute
-		'/lib/better-jquery.php',                               // Replaces the stock WP jquery and enqueues it with defer
+		//'/lib/better-jquery.php',                               // Replaces the stock WP jquery and enqueues it with defer
 
 		//Back-End
 		'/lib/admin/admin-nav.php',                             // Moves dashboard and adds separator under our options page
@@ -195,7 +195,7 @@ function load_scripts() {
 	//Load global site CSS, this will be SASS long term
 	wp_enqueue_style( 'site-layout', get_template_directory_uri() . '/css/layout.css', array( ), filemtime( get_template_directory() . '/css/layout.css' ) );
 	wp_enqueue_style( 'text', get_template_directory_uri() . '/css/text.css', array( ), filemtime( get_template_directory() . '/css/text.css' ) );
-	wp_enqueue_style( 'action-network-embed', get_template_directory_uri() . '/css/better-action-network-embed.css', array( ), filemtime( get_template_directory() . '/css/text.css' ) );
+	//wp_enqueue_style( 'action-network-embed', get_template_directory_uri() . '/css/better-action-network-embed.css', array( ), filemtime( get_template_directory() . '/css/text.css' ) );
 
 	//Allow a few different colors stylesheets for testing
 	//wp_enqueue_style( 'pfa-colors-default', get_template_directory_uri() . '/css/pfa-colors-default.css', array( ) );
