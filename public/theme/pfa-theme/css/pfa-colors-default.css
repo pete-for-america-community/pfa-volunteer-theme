@@ -1,0 +1,198 @@
+/* this will be controlled by SASS */
+
+/* 
+primary: 
+secondary: 
+tertiary:
+
+primary #f3f6f8
+bg-primary-body-text  #a1b5d0
+primary-complement #f3f6f8
+primary-contrast #515d69
+
+secondary #434c5b
+bg-secondary-body-text #ffffff
+secondary-complement #434c5b
+secondry-contrast #c3d2da
+
+tertiary eef4f8
+bg-tertiary-body-text #515d69
+tertiary-complement #515d69
+tertiary-contrast #000000
+
+white #ffffff
+bg-white-body-text #d0e9f9
+white-contrast #000000
+
+/* ----------------------------------- Implementation ------------------------------------------------------------ */
+
+/* ----------------- Background Colors and an associated default text color ----------------------  */
+
+.bg-primary,
+.bg-primary .text-default {
+  background: #f3f6f8;
+  color: #515d69;
+}
+.bg-primary-complement,
+.bg-primary-complement .text-default {
+  background: #f3f6f8;
+  color: #515d69;
+} /* complement has a slightly different shade */
+.btn-primary,
+.btn-primary > a,
+.btn-primary > span > a {
+  background: #f3f6f8;
+  color: #515d69;
+}
+.bg-primary .text-contrast,
+.bg-primary .divider-dotted {
+  color: #a1b5d0;
+} /* Headings aand .text-contrast are defined in relation to a background */
+
+.bg-secondary {
+  background: #434c5b;
+  color: #ffffff;
+  border-color: #434c5b;
+} /* Also .call-out */
+.bg-secondary-complement {
+  background: #434c5b;
+  color: #ffffff;
+}
+.btn-secondary,
+.btn-secondary > a,
+.btn-secondary > span > a {
+  background: #434c5b;
+  color: #ffffff;
+}
+.bg-secondary .text-contrast,
+.bg-secondary .divider-dotted {
+  color: #c3d2da;
+} /* Headings aand .text-contrast are defined in relation to a background */
+
+.bg-white {
+  background: #ffffff;
+  color: #515d69;
+  border-color: #515d69;
+} /* Also .call-out */
+.bg-white-complement {
+  background: #f3f6f8;
+  color: #515d69;
+}
+.btn-white,
+.btn-white > a,
+.btn-white > span > a {
+  background: #ffffff;
+  color: #515d69;
+}
+.bg-white .text-contrast,
+.bg-white .divider-dotted {
+  color: #515d69;
+} /* Headings aand .text-contrast are defined in relation to a background */
+
+/* -------------------------------------------------- Site Structure ------------------------------------------------ */
+/* ------------- Backgrounds -------------*/
+
+/* ------------- General -------------*/
+/* All links inherit from their parent */
+a:not(.text-contrast):not(.btn):not(.btn-tertiary) {
+  color: inherit;
+  background: transparent;
+}
+
+/* ------------- Hovers -------------*/
+/* Button Hovers - the complementary base color; text color is inherited from the .{base-color}-btn class */
+.btn-primary:hover {
+  background: #f3f6f8;
+}
+.btn-transparent {
+  background: transparent;
+  border-color: #434c5b;
+}
+.btn-secondary:hover {
+  background: #434c5b;
+}
+
+/* ------------- Navigation -------------*/
+.slick-arrow:before {
+  color: #434c5b;
+}
+
+/* --------------- Forms ---------------*/
+
+/* Forms Inputs are hard white/ hard black text */
+input:not([type]),
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="time"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+textarea.materialize-textarea {
+  background-color: #ffffff;
+  color: black;
+}
+
+/* --------------- Footer ---------------*/
+
+/* --------------- Misc ---------------*/
+/* Dividers */
+.divider-solid {
+  color: inherit;
+}
+
+/* -------------------------------------------------- Individual Pages ------------------------------------------------ */
+/* Home */
+
+/* About */
+
+/* Contact */
+
+/* -------------------------------------------------- Media Queries ------------------------------------------------ */
+@media only screen and (max-width: 992px) {
+}
+
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+}
+
+@media only screen and (max-width: 768px) {
+}
+
+@media only screen and (max-width: 601px) {
+}
+
+/* -------------------------------------------------- Color Overrides ------------------------------------------------ */
+/* These are helper classes which should only be used to override color scheme default relationships */
+
+/* The default text colors, one for each type of background. */
+.bg-primary-body-text {
+  color: #515d69 !important;
+}
+.bg-secondary-body-text {
+  color: #ffffff !important;
+}
+.bg-white-body-text {
+  color: #434c5b !important;
+}
+
+/* A color of text corresponding to one of the base colors - This should only be used for headings, callouts, special links */
+.text-default {
+  color: inherit;
+} /* This will inherit the element's default color, useful for headings ie, recent blogs */
+.text-primary {
+  color: #f3f6f8 !important;
+}
+.text-secondary {
+  color: #434c5b !important;
+}
+.text-white {
+  color: #ffffff !important;
+}
+.text-black {
+  color: black !important;
+}
+/* Wordpress considerations */

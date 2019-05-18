@@ -1,0 +1,205 @@
+@import "contrast-text-colors"; // not implemented - Calculate contrast text colors for maximum visibility  */
+@import "pfa-colors-setup"; // Individual Color Palettes */
+
+/* ----------------------------------- Implementation ------------------------------------------------------------ */
+
+// ----------------- Background Colors and an associated default text color ----------------------
+// Define a background-color, and an associated default text color
+
+.bg-primary,
+.bg-primary .text-default {
+  background: $primary;
+  color: $bg-primary-body-text;
+}
+.bg-primary-complement,
+.bg-primary-complement .text-default {
+  background: $primary-complement;
+  color: $bg-primary-body-text;
+} /* complement has a slightly different shade */
+.btn-primary,
+.btn-primary > a,
+.btn-primary > span > a {
+  background: $primary;
+  color: $bg-primary-body-text;
+}
+.bg-primary .text-contrast,
+.bg-primary .divider-dotted {
+  color: $primary-contrast;
+} /* Headings aand .text-contrast are defined in relation to a background */
+
+.bg-secondary {
+  background: $secondary;
+  color: $bg-secondary-body-text;
+  border-color: $secondary;
+} /* Also .call-out */
+.bg-secondary-complement {
+  background: $secondary-complement;
+  color: $bg-secondary-body-text;
+}
+.btn-secondary,
+.btn-secondary > a,
+.btn-secondary > span > a {
+  background: $secondary;
+  color: $bg-secondary-body-text;
+}
+.bg-secondary .text-contrast,
+.bg-secondary .divider-dotted {
+  color: $secondary-contrast;
+} /* Headings aand .text-contrast are defined in relation to a background */
+
+.bg-tertiary {
+  background: $tertiary;
+  color: $bg-tertiary-body-text;
+}
+.bg-tertiary-complement {
+  background: $tertiary-complement;
+  color: $bg-tertiary-body-text;
+}
+.btn-tertiary,
+.btn-tertiary > a,
+.btn-tertiary > span > a {
+  background: $tertiary;
+  color: $bg-tertiary-body-text;
+}
+.bg-tertiary .text-contrast,
+.bg-tertiary .divider-dotted {
+  color: $tertiary-contrast;
+} /* Headings aand .text-contrast are defined in relation to a background */
+
+.btn-transparent {
+  background: transparent;
+  color: $tertiary;
+}
+.btn-transparent.active,
+.btn-transparent.active:hover {
+  background: $tertiary;
+  color: $bg-tertiary-body-text;
+}
+
+/* -------------------------------------------------- Site Structure ------------------------------------------------ */
+/* ------------- Backgrounds -------------*/
+// Header
+
+//Main Content Area
+
+//Footer
+
+/* ------------- General -------------*/
+/* All links inherit from their parent */
+a:not(.text-contrast):not(.btn):not(.btn-tertiary) {
+  color: inherit;
+  background: transparent;
+}
+
+/* ------------- Hovers -------------*/
+/* Button Hovers - the complementary base color; text color is inherited from the .{base-color}-btn class */
+.btn-primary:hover {
+  background: $primary-complement;
+}
+.btn-secondary:hover {
+  background: $secondary-complement;
+}
+.btn-tertiary:hover {
+  background: $tertiary-complement;
+}
+.btn-transparent:hover {
+  background: $mute;
+}
+
+/* ------------- Navigation -------------*/
+
+/* --------------- Forms ---------------*/
+
+/* Forms Inputs are hard white/ hard black text */
+input:not([type]),
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="time"],
+input[type="date"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+textarea.materialize-textarea {
+  background-color: $white;
+  color: black;
+}
+
+/* --------------- Footer ---------------*/
+
+/* --------------- Misc ---------------*/
+/* Dividers */
+.divider {
+  background: transparent;
+}
+.divider-solid {
+  color: inherit;
+}
+
+/* -------------------------------------------------- Individual Pages ------------------------------------------------ */
+/* Home */
+
+/* About */
+
+/* Contact */
+
+/* -------------------------------------------------- Media Queries ------------------------------------------------ */
+@media only screen and (max-width: 992px) {
+}
+
+@media only screen and (min-width: 769px) and (max-width: 992px) {
+}
+
+@media only screen and (max-width: 768px) {
+}
+
+@media only screen and (max-width: 601px) {
+}
+
+/* -------------------------------------------------- Color Overrides ------------------------------------------------ */
+/* These are helper classes which should only be used to override color scheme default relationships */
+
+/* The default text colors, one for each type of background. */
+.bg-primary-body-text {
+  color: $bg-primary-body-text !important;
+}
+.bg-secondary-body-text {
+  color: $bg-secondary-body-text !important;
+}
+.bg-tertiary-body-text {
+  color: $bg-tertiary-body-text !important;
+}
+.bg-white-body-text {
+  color: $bg-white-body-text !important;
+}
+.bg-mute-body-text {
+  color: $bg-mute-body-text !important;
+}
+
+/* A color of text corresponding to one of the base colors - This should only be used for headings, callouts, special links */
+.text-default {
+  color: inherit;
+} /* This will inherit the element's default color, useful for headings ie, recent blogs */
+.text-primary {
+  color: $primary !important;
+}
+.text-secondary {
+  color: $secondary !important;
+}
+.text-tertiary {
+  color: $tertiary !important;
+}
+.text-white {
+  color: $white !important;
+}
+.text-black {
+  color: $black !important;
+}
+.text-mute {
+  color: $mute !important;
+}
+
+/* Wordpress considerations */
