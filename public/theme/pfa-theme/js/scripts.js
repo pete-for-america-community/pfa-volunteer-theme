@@ -1,16 +1,4 @@
 (function($) {
-  $(document).ready(function() {
-    $(".tweet-slider").slick({
-      arrows: true,
-      dots: true,
-      infinite: true,
-      slidesToShow: 3,
-      slidesToScroll: 3,
-      centerMode: true,
-      centerPadding: "100px"
-    });
-  });
-
   /* One scrolling option
   $(document).on("scroll", function () {
 
@@ -21,7 +9,6 @@
     }
   });
   */
-
   /* Another scrolling option
   $(function () {
     $(window).scroll(function () {
