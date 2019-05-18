@@ -1,1 +1,9 @@
 /* ---------------- Site Layout -------------------- */
+
+/* Header / Hero */
+.elementor-315
+  .elementor-element.elementor-element-da4790a.hero-background-image
+  .elementor-image
+  img {
+  width: 70%;
+}
