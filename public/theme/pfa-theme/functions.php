@@ -140,16 +140,16 @@ function load_scripts() {
 
 	//Load global scripts in the footer, as deferred:
 	pfa_enqueue_script( 'jquery' );
-	pfa_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/vendor/bootstrap.min.js', array( 'jquery' ), filemtime( get_template_directory() . '/js/vendor/bootstrap.min.js' ), TRUE  );
-	pfa_enqueue_script( 'slick', get_template_directory_uri() . '/js/vendor/slick.js', array( 'jquery' ), filemtime( get_template_directory() . '/js/vendor/slick.js' ), TRUE  );
-	pfa_enqueue_script( 'match_height', get_template_directory_uri() . '/js/vendor/jquery.matchHeight.js', array( 'jquery' ), filemtime( get_template_directory() . '/js/vendor/jquery.matchHeight.js' ), TRUE  );
+	//pfa_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/vendor/bootstrap.min.js', array( 'jquery' ), filemtime( get_template_directory() . '/js/vendor/bootstrap.min.js' ), TRUE  );
+	//pfa_enqueue_script( 'slick', get_template_directory_uri() . '/js/vendor/slick.js', array( 'jquery' ), filemtime( get_template_directory() . '/js/vendor/slick.js' ), TRUE  );
+	//pfa_enqueue_script( 'match_height', get_template_directory_uri() . '/js/vendor/jquery.matchHeight.js', array( 'jquery' ), filemtime( get_template_directory() . '/js/vendor/jquery.matchHeight.js' ), TRUE  );
 	pfa_enqueue_script( 'pfa_scripts', get_template_directory_uri() . '/js/scripts.js', array( 'jquery', 'slick' ), filemtime( get_template_directory() . '/js/scripts.js' ), TRUE  );
 
 	//Load global site CSS, this will be SASS long term
-	pfa_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/vendor/bootstrap.css', array( ), filemtime( get_template_directory() . '/css/vendor/bootstrap.css' ) );
+	//pfa_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/vendor/bootstrap.css', array( ), filemtime( get_template_directory() . '/css/vendor/bootstrap.css' ) );
 	// Ref: https://kenwheeler.github.io/slick/
-	pfa_enqueue_style( 'slick', get_template_directory_uri() . '/css/vendor/slick.css', array( ), filemtime( get_template_directory() . '/css/vendor/slick.css' ) );
-	pfa_enqueue_style( 'slick-theme', get_template_directory_uri() . '/css/vendor/slick-theme.css', array( ), filemtime( get_template_directory() . '/css/vendor/slick-theme.css' ) );
+	//pfa_enqueue_style( 'slick', get_template_directory_uri() . '/css/vendor/slick.css', array( ), filemtime( get_template_directory() . '/css/vendor/slick.css' ) );
+	//pfa_enqueue_style( 'slick-theme', get_template_directory_uri() . '/css/vendor/slick-theme.css', array( ), filemtime( get_template_directory() . '/css/vendor/slick-theme.css' ) );
 	pfa_enqueue_style( 'site-layout', get_template_directory_uri() . '/css/layout.css', array( 'bootstrap', 'slick' ), filemtime( get_template_directory() . '/css/layout.css' ) );
 	pfa_enqueue_style( 'text', get_template_directory_uri() . '/css/text.css', array( ), filemtime( get_template_directory() . '/css/text.css' ) );
     
@@ -159,7 +159,7 @@ function load_scripts() {
 	*/
 
 	//Allow a few different colors stylesheets for testing
-	pfa_enqueue_style( 'pfa-colors-default', get_template_directory_uri() . '/css/pfa-colors-default.css', array( ) );
+	//pfa_enqueue_style( 'pfa-colors-default', get_template_directory_uri() . '/css/pfa-colors-default.css', array( ) );
 
 	//Fonts
 	pfa_enqueue_style( 'fonts', get_template_directory_uri() . '/css/fonts.css', array( ), filemtime( get_template_directory() . '/css/fonts.css' ) );
@@ -168,8 +168,8 @@ function load_scripts() {
 
 	//Example conditional enqueueing based on template; here 2020 before/after slider
 	if ( is_page_template( 'placeholder-nonexistent-template.php' ) ) {
-		pfa_enqueue_script( 'twenty-twenty', get_template_directory_uri().'/js/vendor/jquery.twentytwenty.js', array( 'jquery' ), NULL, TRUE );
-		pfa_enqueue_script( 'twenty-twenty-activation', get_template_directory_uri().'/js/vendor/twenty-twenty-activation.js', array( 'jquery', 'twenty-twenty' ), NULL, TRUE );
+		//pfa_enqueue_script( 'twenty-twenty', get_template_directory_uri().'/js/vendor/jquery.twentytwenty.js', array( 'jquery' ), NULL, TRUE );
+		//pfa_enqueue_script( 'twenty-twenty-activation', get_template_directory_uri().'/js/vendor/twenty-twenty-activation.js', array( 'jquery', 'twenty-twenty' ), NULL, TRUE );
 	}
 
 }
