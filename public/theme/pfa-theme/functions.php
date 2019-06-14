@@ -218,7 +218,7 @@ function load_scripts() {
 /* ----------------------------------------------------------------------------------------------------------------- */
 
 //Global styles and scripts for the WP Backend
-add_action( 'admin_enqueue_scripts', 'enqueue_admin_style' );
+//add_action( 'admin_enqueue_scripts', 'enqueue_admin_style' );
 function enqueue_admin_style() {
 	wp_register_script( 'pfa_wp_admin_js', get_template_directory_uri() . '/lib/admin/admin-scripts.js', false, NULL );
 	wp_enqueue_script('pfa_wp_admin_js' );
