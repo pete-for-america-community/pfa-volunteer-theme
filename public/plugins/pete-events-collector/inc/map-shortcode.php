@@ -36,6 +36,10 @@ function register_map_shortcode( $args ){
     <!-- EventsMap output -->
     <div class=<?php echo implode( " ", $args['output_wrapper_classes']); ?>>
     
+        <!-- Load custom map DOM -->
+        <?php require_once plugin_dir_path( __FILE__ ) . "map/" . "map-partial.php"; ?>
+        <!-- End custom map DOM -->
+
         <p id="ajaxPlaceholder">Map Content Placeholder</p>
 
         <!-- Load custom map JS -->
