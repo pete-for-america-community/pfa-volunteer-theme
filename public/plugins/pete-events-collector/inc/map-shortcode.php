@@ -1,4 +1,6 @@
 <?php
+
+define( 'EVENTMAPPER_PATH', 'map/eventmapper-client' );
  
 /**
  * Registers a shortcode to display an events map which can be referenced outside the WP Admin interfaces
@@ -43,19 +45,8 @@ function register_map_shortcode( $args ){
         <p id="ajaxPlaceholder">Map Content Placeholder</p>
 
         <!-- Load custom map JS -->
-        <script>
-            <?php 
-            if (  file_exists( plugin_dir_path( __FILE__ ) . "js/" . $args['map_src'] ) ) {
-                // Clear the placeholder and load the JS file
-                echo "var output = document.getElementById('ajaxPlaceholder'); output.innerHTML = '';";
-                require_once plugin_dir_path( __FILE__ ) . "js/" . $args['map_src'];
-            } else {
-                // Throw an error to the console and content holder
-                echo "var output = document.getElementById('ajaxPlaceholder'); output.innerHTML = 'Error loading Map';";
-                echo "console.log('Error: " . $args['map_src'] . " could not be located for inclusion on the page.');";
-            }
-            ?>
-        </script>
+        <script src="<?php echo plugins_url( EVENTMAPPER_PATH . "/infobubble-compiled.js", __FILE__ );  ?>"></script>
+        <script type="text/javascript" src="<?php echo plugins_url( EVENTMAPPER_PATH . "/eventmapper.js", __FILE__ );  ?>"></script>
         <!-- End custom map JS -->
  
     </div>
