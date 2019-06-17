@@ -1,3 +1,13 @@
+// Options file URI, pluginPath injected by PHP
+if (typeof pluginPath !== 'undefined') {
+    var mapOptionsFilename = pluginPath;
+}
+
+// Load events from server, eventsData is injected by PHP
+if (typeof eventsData !== 'undefined') {
+    var serverEventsList = eventsData;
+}
+
 // The map we're displaying
 let map = null;
 
@@ -39,13 +49,13 @@ function buildContentString(name, date, address, description) {
     }
     addrString += '<\p>';
 
-    const cs = '<div class="bubbleText">'+
-        `<h1 class="bubbleHeader">${name}</h1>`+
-        `<p class="bubbleDate"><i>${formattedDate}</i></p>`+
-        addrString+
-        '<div class="bubbleContent">'+
-        `<p>${description}</p>`+
-        '</div>'+
+    const cs = '<div class="bubbleText">' +
+        `<h1 class="bubbleHeader">${name}</h1>` +
+        `<p class="bubbleDate"><i>${formattedDate}</i></p>` +
+        addrString +
+        '<div class="bubbleContent">' +
+        `<p>${description}</p>` +
+        '</div>' +
         '</div>';
     return cs;
 }
@@ -226,10 +236,10 @@ function getEventJSON(callback) {
 // After the map is set up, it initiates retrieval of the JSON, with callback
 // to continue with a parsed set of events by calling drawMap().
 function initMap() {
-    $.getJSON("map-options.json", function (mapstyle) {
+    $.getJSON(pluginPath + "map-options.json", function (mapstyle) {
         map = new google.maps.Map(document.getElementById("map"), {
             zoom: 5,
-            center: {lat: 37.435851, lng: -122.133246},
+            center: { lat: 37.435851, lng: -122.133246 },
             zoomControl: true,
             zoomControlOptions: {
                 position: google.maps.ControlPosition.RIGHT_CENTER
