@@ -62,6 +62,7 @@ _Voila! You're now running the PFA Theme locally._
       - reusable/complex usage of the [WordPress Loop](https://codex.wordpress.org/The_Loop))
       - reusable/complex SQL queries
   - /img/ will hold any image files meant to be deployed to the /wp-content/uploads/ folder. IE, media assets created by the WordPress Media Uploader
+  - /plugins/ any folders here should be deployed to the WordPress /wp-content/plugins/ directory
 - /reference/ holds any documents created by the team to inform our intended direction
 - /database/ holds any database backups, or database partials worked on to be imported (for example, a list of navigation items, or a list of custom slider posts)
 - /tests/ will hold any PHPUnit testing we choose to include
