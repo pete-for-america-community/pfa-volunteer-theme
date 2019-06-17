@@ -21,10 +21,10 @@ let markers = [];
 // This is a boolean flag used to open/close bubbles
 // automatically with mouse attention.  If false,
 // then we use click behavior to toggle visibility.
-// True is the default behavior.
+// False is the default behavior.
 // closeControl is the toggle button in the control
 // panel associated with managing this flag.
-let autoBubble = true;
+let autoBubble = false;
 let closeControl = null;
 
 // Utility function useful for printing loc structures
@@ -127,10 +127,10 @@ function mapEvents() {
 function toggleAutoBubble() {
     if (autoBubble) {
         autoBubble = false;
-        closeControl.style.backgroundColor = "#ccc";
+        closeControl.style.backgroundColor = "#fff";
     } else {
         autoBubble = true;
-        closeControl.style.backgroundColor = "#fff";
+        closeControl.style.backgroundColor = "#ccc";
     }
 }
 
@@ -199,7 +199,7 @@ function setupControl() {
     // Create global controls
     ShowControl(centerControlDiv, showAllMarkers, "Show All");
     ShowControl(centerControlDiv, showFutureEvents, "Upcoming Only");
-    closeControl = ShowControl(centerControlDiv, toggleAutoBubble, "DBG: AutoBubble");
+    closeControl = ShowControl(centerControlDiv, toggleAutoBubble, "DBG: Enable AutoBubble");
 }
 
 // drawMap() is called after events are parsed from JSON, then draws
@@ -251,8 +251,10 @@ function initMap() {
             rotateControl: false,
             styles: mapstyle,
         });
-    }).done(getEventJSON(function(response) {
-        eventList = JSON.parse(response);
-        drawMap();
-    }));
+        getEventJSON(function(response) {
+            eventList = JSON.parse(response);
+            drawMap();
+        });
+    })
+
 }
