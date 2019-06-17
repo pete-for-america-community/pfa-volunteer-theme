@@ -26,3 +26,17 @@ html, body {
 .js-info-bubble-close {
     visibility: hidden;
 }
+
+.map-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.map-container #filter-choices {
+    width: 200px;
+    border: 1px solid #fff;
+    width: 900px;
+    display: flex;
+    justify-content: space-around;
+    background-color: antiquewhite;
+}
