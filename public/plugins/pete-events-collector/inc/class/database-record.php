@@ -44,17 +44,17 @@ class Event {
     public function getEventRecord() {
 
         $event_data = array(
-            'event' => array(
-                'originalID' => $this->originalID,
-                'name' => $this->name,
-                'address_lines' => $this->addressLines,
-                'description' => $this->description,
-                'location' => array(
-                    'lat' => $this->latitude,
-                    'lng' => $this->longitude,
-                ),
-                'source' => $this->source
-            )
+            
+            'originalID' => $this->originalID,
+            'name' => $this->name,
+            'address_lines' => $this->addressLines,
+            'description' => $this->description,
+            'location' => array(
+                'lat' => $this->latitude,
+                'lng' => $this->longitude,
+            ),
+            'source' => $this->source
+            
         );
     
         return $event_data;

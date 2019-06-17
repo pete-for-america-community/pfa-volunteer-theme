@@ -29,8 +29,8 @@ class APIInterface_ActionNetwork extends apiInterface {
                 
             $parsed_events[] = new Event( 
                 $event['title'], //$name, 
-                $event['address_lines'], //$addressLines, 
                 $event['description'], //$description, 
+                $event['location']['address_lines'], //$addressLines, 
                 $event['location']['location']['latitude'], //$latitude, 
                 $event['location']['location']['longitude'], //$longitude, 
                 $event['identifiers'][0], //$originalID

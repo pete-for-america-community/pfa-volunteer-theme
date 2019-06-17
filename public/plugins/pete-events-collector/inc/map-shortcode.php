@@ -1,5 +1,7 @@
 <?php
- 
+
+define( 'EVENTMAPPER_PATH', 'pete-events-collector/inc/map/eventmapper-client' );
+
 /**
  * Registers a shortcode to display an events map which can be referenced outside the WP Admin interfaces
  * 
@@ -24,35 +26,36 @@ function register_map_shortcode( $args ){
 
     );
     $args = wp_parse_args( $args, $defaults );
+
+    global $EventsManager;
     
     // Capture all shortcode output to a buffer for potential filtering
     ob_start();
     ?>
+    <!-- Inline CSS for map wrapper -->
+    <style>.events-map { height: 400px; }</style>
+
     <!-- Expose events API to the front end -->
     <script>
-        var <?php echo $args['cache_var_name']; ?> = <?php echo json_encode( get_option( EVENTS_COLLECTOR_SETTING_NAME ) ); ?>
+        var <?php echo $args['cache_var_name']; ?> = <?php echo $EventsManager->getEventsJSON(); ?>;
+        var pluginPath = "<?php echo plugins_url( EVENTMAPPER_PATH . '/', "map-options.json" ); ?>";
     </script>
 
     <!-- EventsMap output -->
     <div class=<?php echo implode( " ", $args['output_wrapper_classes']); ?>>
     
-        <p id="ajaxPlaceholder">Map Content Placeholder</p>
-
-        <!-- Load custom map JS -->
-        <script>
-            <?php 
-            if (  file_exists( plugin_dir_path( __FILE__ ) . "js/" . $args['map_src'] ) ) {
-                // Clear the placeholder and load the JS file
-                echo "var output = document.getElementById('ajaxPlaceholder'); output.innerHTML = '';";
-                require_once plugin_dir_path( __FILE__ ) . "js/" . $args['map_src'];
-            } else {
-                // Throw an error to the console and content holder
-                echo "var output = document.getElementById('ajaxPlaceholder'); output.innerHTML = 'Error loading Map';";
-                echo "console.log('Error: " . $args['map_src'] . " could not be located for inclusion on the page.');";
-            }
-            ?>
-        </script>
+        <!-- Load custom map DOM -->
+        <div id="map"></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://apis.google.com/js/api.js"></script>
+        <script type="text/javascript" src="<?php echo plugins_url( EVENTMAPPER_PATH . "/infobubble-compiled.js" );  ?>"></script>
+        <script type="text/javascript" src="<?php echo plugins_url( EVENTMAPPER_PATH . "/eventmapper.js" );  ?>"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo GOOGLE_MAPS_API_KEY; ?>&libraries=visualization&callback=initMap" async defer></script>
+        <link href="<?php echo plugins_url( EVENTMAPPER_PATH . "/eventmapper.css" );  ?>" rel="stylesheet" type="text/css">
+        <!-- End custom map DOM -->
+                
         <!-- End custom map JS -->
+
  
     </div>
     <!-- /EventsMap output -->
