@@ -241,7 +241,8 @@ function initMap() {
         path = mapOptionsFilename + path;
     }
     $.getJSON(path, function (mapstyle) {
-        map = new google.maps.Map(document.getElementById("map"), {
+	let mElement = document.getElementById("map");
+        map = new google.maps.Map(mElement, {	    
             zoom: 5,
             center: { lat: 37.435851, lng: -122.133246 },
             zoomControl: true,
