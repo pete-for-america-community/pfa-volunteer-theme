@@ -60,6 +60,7 @@ function buildContentString(name, date, address, description) {
     return cs;
 }
 
+
 function mapEvents() {
     // Now map each event.
     for (let e of eventList.events) {
@@ -88,18 +89,24 @@ function mapEvents() {
             position: loc,
             title: name,
             map: map,
-            icon: scaled_icon,
-            opacity: 0.5,
+            icon: { url: "Pete Face.svg", scaledSize: new google.maps.Size(50,50) },
+            opacity: 0.7,
             date: date
         });
 
-        marker.addListener("click", function() {
+        marker.addListener("click", function clickListener() {
             if (!autoBubble) {
                 if (infoBubble.visible) {
                     infoBubble.visible = false;
                     infoBubble.close(map, marker);
                 } else {
                     infoBubble.visible = true;
+                    google.maps.event.addListenerOnce(infoBubble, 'domready', function(){
+                        // WARNING: COMPLETE HACK
+                        // infoBubble.e is the compiled name for the content of the bubble.
+                        google.maps.event.addDomListener(infoBubble.e, 'click',
+                            clickListener);
+                    });
                     infoBubble.open(map,marker);
                 }
             }
@@ -199,7 +206,9 @@ function setupControl() {
     // Create global controls
     ShowControl(centerControlDiv, showAllMarkers, "Show All");
     ShowControl(centerControlDiv, showFutureEvents, "Upcoming Only");
-    closeControl = ShowControl(centerControlDiv, toggleAutoBubble, "DBG: Enable AutoBubble");
+
+    // Removing the closeControl so that behavior is always on-click.
+    // closeControl = ShowControl(centerControlDiv, toggleAutoBubble, "DBG: Enable AutoBubble");
 }
 
 // drawMap() is called after events are parsed from JSON, then draws
@@ -240,6 +249,7 @@ function initMap() {
     if (typeof mapOptionsFilename !== 'undefined') {
         path = mapOptionsFilename + path;
     }
+
     $.getJSON(path, function (mapstyle) {
 	let mElement = document.getElementById("map");
         map = new google.maps.Map(mElement, {	    
@@ -256,6 +266,7 @@ function initMap() {
             rotateControl: false,
             styles: mapstyle,
         });
+
         if (serverEventsList == null) {
             getEventJSON(function (response) {
                 eventList = JSON.parse(response);
