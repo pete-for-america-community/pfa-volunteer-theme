@@ -251,10 +251,15 @@ function initMap() {
             rotateControl: false,
             styles: mapstyle,
         });
-        getEventJSON(function(response) {
-            eventList = JSON.parse(response);
+        if (serverEventsList == null) {
+            getEventJSON(function (response) {
+                eventList = JSON.parse(response);
+                drawMap();
+            });
+        } else {
+            eventList = serverEventsList;
             drawMap();
-        });
+        }
     })
 
 }
