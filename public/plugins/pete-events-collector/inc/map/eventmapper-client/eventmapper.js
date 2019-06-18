@@ -236,7 +236,6 @@ function getEventJSON(callback) {
 // After the map is set up, it initiates retrieval of the JSON, with callback
 // to continue with a parsed set of events by calling drawMap().
 function initMap() {
-<<<<<<< HEAD
     let path = "map-options.json";
     if (typeof mapOptionsFilename !== 'undefined') {
         path = mapOptionsFilename + path;
@@ -244,11 +243,6 @@ function initMap() {
     $.getJSON(path, function (mapstyle) {
 	let mElement = document.getElementById("map");
         map = new google.maps.Map(mElement, {	    
-=======
-    $.getJSON(pluginPath + "map-options.json", function (mapstyle) {
-        let mElement = document.getElementById("map");
-        map = new google.maps.Map(mElement, {
->>>>>>> First attempts to use a flexbox.
             zoom: 5,
             center: { lat: 37.435851, lng: -122.133246 },
             zoomControl: true,
