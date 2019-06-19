@@ -27,16 +27,19 @@ html, body {
     visibility: hidden;
 }
 
-.map-container {
-    display: flex;
-    justify-content: flex-start;
+#control-panel {
+    box-shadow: 5px 5px 2px rgba(45, 58, 94, 0.4);
+    left: 20px
 }
-
-.map-container #filter-choices {
-    width: 200px;
-    border: 1px solid #fff;
-    width: 900px;
-    display: flex;
-    justify-content: space-around;
-    background-color: antiquewhite;
+.control-panel-element {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 16px;
+    color: #616161;
+    background-color: #eef4f8;
+    display: block;
+    border: 1px solid #353535;
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
 }

@@ -42,6 +42,8 @@ function locToString(loc) {
 function buildContentString(name, date, address, description) {
     const dateOptions = { year: "numeric", month: "long", day: "numeric" };
     const formattedDate = date.toLocaleDateString("en-US", dateOptions);
+    const timeOptions = { hour: "numeric", minute: "2-digit"};
+    const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
 
     let addrString = '<p class="bubbleAddr">';
     for (let a of address) {
@@ -51,7 +53,8 @@ function buildContentString(name, date, address, description) {
 
     const cs = '<div class="bubbleText">' +
         `<h1 class="bubbleHeader">${name}</h1>` +
-        `<p class="bubbleDate"><i>${formattedDate}</i></p>` +
+        `<p class="bubbleDate"><i>${formattedDate} at ` +
+        `${formattedTime}</i></p>`+
         addrString +
         '<div class="bubbleContent">' +
         `<p>${description}</p>` +
@@ -85,11 +88,18 @@ function mapEvents() {
             // scaledSize: new google.maps.Size(16, 16),
         };
 
+        // WARNING: HACK
+        // I'm not sure if this should be the same path or not.  Check with Jared.
+        let path = "Pete Face.svg";
+        if (typeof mapOptionsFilename !== 'undefined') {
+            path = mapOptionsFilename + path;
+        }
+
         const marker = new google.maps.Marker({
             position: loc,
             title: name,
             map: map,
-            icon: { url: "Pete Face.svg", scaledSize: new google.maps.Size(50,50) },
+            icon: { url: path, scaledSize: new google.maps.Size(50,50) },
             opacity: 0.7,
             date: date
         });
@@ -170,22 +180,12 @@ function showFutureEvents() {
 function ShowControl(controlDiv, f, title) {
     // Set CSS for the control border.
     let controlUI = document.createElement("div");
-    controlUI.style.backgroundColor = "#fff";
-    controlUI.style.display = "block";
-    controlUI.style.border = "1px solid #000";
-    controlUI.style.cursor = "pointer";
-    controlUI.style.textAlign = "center";
+    controlUI.classList.add('control-panel-element');
     controlUI.title = title;
     controlDiv.appendChild(controlUI);
 
     // Set CSS for the control interior.
     let controlText = document.createElement("div");
-    controlText.style.color = "rgb(25,25,25)";
-    controlText.style.fontFamily = "Roboto,Arial,sans-serif";
-    controlText.style.fontSize = "16px";
-    controlText.style.lineHeight = "38px";
-    controlText.style.paddingLeft = "5px";
-    controlText.style.paddingRight = "5px";
     controlText.innerHTML = title;
     controlUI.appendChild(controlText);
 
@@ -200,8 +200,9 @@ function setupControl() {
     // Create the DIV to hold the control and call the CenterControl()
     // constructor passing in this DIV.
     let centerControlDiv = document.createElement("div");
+    centerControlDiv.id = "control-panel";
     centerControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.LEFT_CENTER].push(centerControlDiv);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerControlDiv);
 
     // Create global controls
     ShowControl(centerControlDiv, showAllMarkers, "Show All");
