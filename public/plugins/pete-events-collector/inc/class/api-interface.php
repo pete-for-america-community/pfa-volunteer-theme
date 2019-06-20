@@ -3,7 +3,6 @@ abstract class apiInterface {
 
     private $endpoint; // String
     private $apiName; // String
-    private $response; // JSON object
     private $parsedResponse; // JSON Object
 
 
@@ -33,8 +32,7 @@ abstract class apiInterface {
 
         $this->apiName = $apiName;
         $this->endpoint = $endpoint;
-        $this->response = $this->fetchEndpoint( $endpoint );
-        $this->parsedResponse = $this->parseResponse( $this->response );
+        $this->parsedResponse = $this->parseResponse( $this->fetchEndpoint( $endpoint ) );
     }
 
 
@@ -124,6 +122,30 @@ abstract class apiInterface {
     protected function fetchEndpoint( $endpoint ) {
         if ( DEBUG ) { error_log('fetchEndpoint called'); }
         
+        $response = $this->requestData( $endpoint );
+
+        // If the response contains only a portion of the total, flatten multiple requests into a single unit 
+        $response = $this->processPages( $response, $endpoint );
+
+        //Validate the results can be used
+        $response = $this->validateFetchedResults( $response );
+        if ( is_wp_error( $response ) ) { 
+            throw new Exception ( $response->get_error_message() ); 
+        }
+        
+        if ( DEBUG ) {
+            //error_log( '$response: ' . print_r( $response, true )  );
+            error_log( '$response["body"]: ' . print_r( $response["body"], true )  );
+        }
+
+        //Update
+        return $this->response;
+    
+    }
+
+    
+    protected function requestData( $endpoint ) {
+
         //Basic endpoint validation
         $endpoint = $this->validateEndpoint( $endpoint );
         if ( is_wp_error( $endpoint ) ) { 
@@ -144,24 +166,23 @@ abstract class apiInterface {
             )
         );
         if ( DEBUG ) { error_log('wp_remote_get performed'); }
-        
-        //@TODO Handle responses with multiple pages/needing mutliple requests
-
-        //Validate the results can be used
-        $response = $this->validateFetchedResults( $response );
-        if ( is_wp_error( $response ) ) { 
-            throw new Exception ( $response->get_error_message() ); 
-        }
-        
-        if ( DEBUG ) {
-            //error_log( '$response: ' . print_r( $response, true )  );
-            error_log( '$response["body"]: ' . print_r( $response["body"], true )  );
-        }
-
-        //Update
-        $this->response = $response['body'];
-        return $this->response;
     
+        return $response;
+    }
+
+
+    protected function processPages( $response, $endpoint ) {
+
+        if ( $response['next'] ) {
+
+            return null;
+
+        } else {
+
+            return $response;
+
+        }
+
     }
 
 
