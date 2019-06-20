@@ -1,0 +1,8 @@
+this folder contains any reference documents, which aren't part of the final product, but which might help inform it.
+
+For example:
+design documents
+spec documents
+collaborative notes
+markup specs
+old verions of the theme

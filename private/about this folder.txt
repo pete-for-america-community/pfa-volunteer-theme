@@ -1,0 +1,7 @@
+the /private folder is part of the project, but is not indexed to the repo. 
+
+Use this space to hold any temporary files you only want present on your local computer - but not part of the public project in any way. 
+
+ie, working files just mean to help you. 
+
+This is a good space to house any private information, like private SSH keys. 

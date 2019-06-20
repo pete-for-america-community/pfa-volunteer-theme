@@ -1,0 +1,2 @@
+*.idea/
+*private/secret_api_keys.php

@@ -1,0 +1,1 @@
+This is just a "working with images" folder - it's not part of the production build. Great for storing PSDs etc
