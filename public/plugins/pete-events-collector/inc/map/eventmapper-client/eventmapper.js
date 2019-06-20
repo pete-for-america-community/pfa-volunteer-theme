@@ -236,7 +236,11 @@ function getEventJSON(callback) {
 // After the map is set up, it initiates retrieval of the JSON, with callback
 // to continue with a parsed set of events by calling drawMap().
 function initMap() {
-    $.getJSON(pluginPath + "map-options.json", function (mapstyle) {
+    let path = "map-options.json";
+    if (typeof mapOptionsFilename !== 'undefined') {
+        path = mapOptionsFilename + path;
+    }
+    $.getJSON(path, function (mapstyle) {
         map = new google.maps.Map(document.getElementById("map"), {
             zoom: 5,
             center: { lat: 37.435851, lng: -122.133246 },
@@ -251,10 +255,15 @@ function initMap() {
             rotateControl: false,
             styles: mapstyle,
         });
-        getEventJSON(function(response) {
-            eventList = JSON.parse(response);
+        if (serverEventsList == null) {
+            getEventJSON(function (response) {
+                eventList = JSON.parse(response);
+                drawMap();
+            });
+        } else {
+            eventList = serverEventsList;
             drawMap();
-        });
+        }
     })
 
 }

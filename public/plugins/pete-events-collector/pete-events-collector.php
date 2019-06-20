@@ -93,9 +93,8 @@ function events_collector_admin_styles( $admin_page_slug ) {
  * 
  * @return Array(Events)
  */
-function fetch_api_data( $update = true, $endpoint = ACTION_NETWORK_EVENTS_ENDPOINT, $api_name = 'Action Network' ) {
+function fetch_api_data( $eManager = null, $update = true, $endpoint = ACTION_NETWORK_EVENTS_ENDPOINT, $api_name = 'Action Network' ) {
     if (DEBUG) { error_log('---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------'); }
-    global $EventsManager;
 
     // Fire up a new API interface and try to map incoming data
     try {
@@ -112,14 +111,14 @@ function fetch_api_data( $update = true, $endpoint = ACTION_NETWORK_EVENTS_ENDPO
 
         error_log( var_export( $parsed_events, true ) );
  
-        $EventsManager->addEvents( $parsed_events );
-        $result = $EventsManager->getEvents();
+        $eManager->addEvents( $parsed_events );
+        $result = $eManager->getEvents();
 
     } catch ( Exception $e ) {
         if (DEBUG) { error_log( 'Error processing API: ' . print_r( $e->getMessage(), true ) ); }
     }
 
-    if ( is_wp_error( $result ) ) { 
+    if ( is_wp_error( $result ) ) {
         if ( DEBUG ) { error_log( "[Events Collector] Error retrieving API request on settings page load. Error: " . $result->get_error_message() ); }
         if ( $update ) { update_option( EVENTS_COLLECTOR_SETTING_NAME, FALSE ); }
         return FALSE;
@@ -134,11 +133,11 @@ function fetch_api_data( $update = true, $endpoint = ACTION_NETWORK_EVENTS_ENDPO
 }
 // @todo? Create a table with our event results
 // For now, trigger on page load:
-fetch_api_data( TRUE, ACTION_NETWORK_EVENTS_ENDPOINT, 'Action Network' );
+fetch_api_data( $EventsManager, TRUE, ACTION_NETWORK_EVENTS_ENDPOINT, 'Action Network' );
 //Need to handle multi-page events 'categories':
-//fetch_api_data( TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/aafc4b0f-38ff-4cae-8891-8b6dec64b170', 'Action Network - Events Campaign' );
-//fetch_api_data( TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/5565fc1e-b0bf-43e8-ad66-13bdb9605d7f', 'Action Network - Events Campaign' );
-//fetch_api_data( TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/8765fc89-1ec6-44ea-87ef-5b3d5e6eb848', 'Action Network - Events Campaign' );
+//fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/aafc4b0f-38ff-4cae-8891-8b6dec64b170', 'Action Network - Events Campaign' );
+//fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/5565fc1e-b0bf-43e8-ad66-13bdb9605d7f', 'Action Network - Events Campaign' );
+//fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/8765fc89-1ec6-44ea-87ef-5b3d5e6eb848', 'Action Network - Events Campaign' );
 
 
 /**
