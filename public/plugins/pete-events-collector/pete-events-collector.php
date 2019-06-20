@@ -14,6 +14,7 @@ License: MIT
 define( "EVENTS_COLLECTOR_SETTING_NAME",                "events_collector_options" );
 define( "ACTION_NETWORK_EVENTS_ENDPOINT",               "https://actionnetwork.org/api/v2/events/" );
 define( "ACTION_NETWORK_EVENTS_CAMPAIGN_ENDPOINT",      "https://actionnetwork.org/api/v2/event_campaigns" );
+define( "MOBILIZE_EVENTS_ENDPOINT",                     "https://api.mobilize.us/v1/organizations/1297/events" );
 define( "AN_EVENTS_NAME",                               "Action Network" );
 define( "AN_EVENTS_CAMPAIGN_NAME",                      "Action Network - Events Campaign" );
 define( "MAP_SHORTCODE_FILENAME",                       "map-shortcode.php");
