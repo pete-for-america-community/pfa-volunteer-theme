@@ -1,5 +1,5 @@
-(function($) {
-  $(document).ready(function() {
+(function ($) {
+  $(document).ready(function () {
     var output = $("#events-cache-output");
     var displayButton = $("button#displayResults");
     var cacheButton = $("button#clearCache");
@@ -8,18 +8,18 @@
     var manualEndpoint = $("input#manualEndpoint");
 
     // Attach  initial button actions
-    displayButton.click(function(e) {
+    displayButton.click(function (e) {
       displayResults(e, output, displayButton);
     });
-    cacheButton.click(function(e) {
+    cacheButton.click(function (e) {
       clearCache(e, output, cacheButton);
     });
-    regenerateButton.click(function(e) {
+    regenerateButton.click(function (e) {
       //console.log("regenerateCache clicked");
       clearCache(e, output, cacheButton);
       regenerateCache(e, output, regenerateButton);
     });
-    manualEndpointButton.click(function(e) {
+    manualEndpointButton.click(function (e) {
       //console.log("regenerateCache clicked");
       manualFetch(e, output, manualEndpointButton, manualEndpoint);
     });
@@ -37,13 +37,13 @@
       {
         action: "retrieve_cache"
       },
-      function(response) {}
+      function (response) { }
     )
-      .done(function(response) {
+      .done(function (response) {
         // If successful, update the display area with the response
         output.val(JSON.stringify(response));
       })
-      .fail(function() {
+      .fail(function () {
         //Process failed requests
         output.val("Error retrieving current cache.");
       });
@@ -61,14 +61,14 @@
       {
         action: "clear_cache"
       },
-      function(response) {
+      function (response) {
         cacheButton
           .find(".spinner")
           .addClass("is-active")
           .removeClass("partially-active");
       }
     )
-      .done(function(response) {
+      .done(function (response) {
         cacheButton
           .find(".spinner")
           .addClass("is-success")
@@ -77,7 +77,7 @@
         // If successful, update the display area with the response
         output.val(JSON.stringify(response));
       })
-      .fail(function() {
+      .fail(function () {
         //Process failed requests
         cacheButton
           .find(".spinner")
@@ -98,17 +98,17 @@
     $.post(
       ajaxurl, //ajaxurl is injected by WP
       {
-        action: "events_collector_settings",
+        action: "regenerate_cache",
         update: "TRUE"
       },
-      function(response) {}
+      function (response) { }
     )
-      .done(function(response) {
+      .done(function (response) {
         //console.log("success!", response);
         // If successful, update the display area with the response
         output.val(JSON.stringify(response));
       })
-      .fail(function() {
+      .fail(function () {
         //Process failed requests
         console.log("[Events Collector] Error in WP Admin AJAX");
       });
@@ -129,14 +129,14 @@
         update: "FALSE",
         endpoint: manualEndpoint.value()
       },
-      function(response) {}
+      function (response) { }
     )
-      .done(function(response) {
+      .done(function (response) {
         //console.log("success!", response);
         // If successful, update the display area with the response
         output.val(JSON.stringify(response));
       })
-      .fail(function() {
+      .fail(function () {
         //Process failed requests
         console.log("[Events Collector] Error in WP Admin AJAX");
       });

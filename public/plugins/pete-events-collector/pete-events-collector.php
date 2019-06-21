@@ -148,7 +148,7 @@ function fetch_api_data( $eManager = null, $update = true, $endpoint = ACTION_NE
 * Add the AJAX endpoint for our internal settings form (logged-in users only)
 * 
 */
-add_action( 'wp_ajax_events_collector_settings', 'ajax_fetch_api_data' );
+add_action( 'wp_ajax_regenerate_cache', 'ajax_fetch_api_data' );
 add_action( 'wp_ajax_retrieve_cache', 'ajax_retrieve_cache' );
 add_action( 'wp_ajax_clear_cache', 'ajax_clear_cache' );
 add_action( 'wp_ajax_manual_endpoint_fetch', 'ajax_retrieve_cache' );
