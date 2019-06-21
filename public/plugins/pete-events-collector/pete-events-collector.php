@@ -136,8 +136,8 @@ function fetch_api_data( $eManager = null, $update = true, $endpoint = ACTION_NE
 }
 // @todo? Create a table with our event results
 // For now, trigger on page load:
-fetch_api_data( $EventsManager, TRUE, ACTION_NETWORK_EVENTS_ENDPOINT, AN_EVENTS_NAME );
-fetch_api_data( $EventsManager, TRUE, MOBILIZE_EVENTS_ENDPOINT, MOBILIZE_EVENTS_NAME );
+//fetch_api_data( $EventsManager, TRUE, ACTION_NETWORK_EVENTS_ENDPOINT, AN_EVENTS_NAME );
+//fetch_api_data( $EventsManager, TRUE, MOBILIZE_EVENTS_ENDPOINT, MOBILIZE_EVENTS_NAME );
 //Need to handle multi-page events 'categories':
 //fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/aafc4b0f-38ff-4cae-8891-8b6dec64b170', 'Action Network - Events Campaign' );
 //fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/5565fc1e-b0bf-43e8-ad66-13bdb9605d7f', 'Action Network - Events Campaign' );
