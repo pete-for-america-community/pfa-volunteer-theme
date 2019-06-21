@@ -36,6 +36,7 @@ require_once plugin_dir_path( __FILE__ ) . "inc/class/database-record.php";
 require_once plugin_dir_path( __FILE__ ) . "inc/class/events-manager.php";
 
 //Load main events manager
+global $EventsManager;
 $EventsManager = new EventsManager();
 
 //Load the secret API keys
@@ -112,9 +113,10 @@ function fetch_api_data( $eManager = null, $update = true, $endpoint = ACTION_NE
         
         $parsed_events = $apiInterface->getParsedResponse();
 
-        error_log( var_export( $parsed_events, true ) );
- 
-        $eManager->addEvents( $parsed_events );
+        error_log( 'parsed_events: ', var_export( $parsed_events, true ) );
+        if ( is_array( $parsed_events ) ) {
+            $eManager->addEvents( $parsed_events );
+        }
         $result = $eManager->getEvents();
 
     } catch ( Exception $e ) {
@@ -158,22 +160,24 @@ add_action( 'wp_ajax_manual_endpoint_fetch', 'ajax_retrieve_cache' );
  * Perform a new API request and return the data as a response
  */
 function ajax_fetch_api_data() {
+    global $EventsManager;
 
     $endpoint = array_key_exists( 'endpoint', $_POST ) ? $_POST['endpoint'] : NULL;
     $update = array_key_exists( 'update', $_POST ) ? $_POST['update'] : TRUE;
 
     // Perform the api fetch
     if ( $endpoint ) { 
-        $data = fetch_api_data( $update, $endpoint ); //optional Endpoint coming from JS
+        $events = fetch_api_data( $EventsManager, $update, $endpoint, 'Manual Endpoint ' ); //optional Endpoint coming from JS
     } else {
-        $data = fetch_api_data( $update ); 
+        fetch_api_data( $EventsManager, TRUE, ACTION_NETWORK_EVENTS_ENDPOINT, AN_EVENTS_NAME );
+        $events = fetch_api_data( $EventsManager, TRUE, MOBILIZE_EVENTS_ENDPOINT, MOBILIZE_EVENTS_NAME );
     }
 
     if ( $_POST['update'] === "TRUE" ) {
-        update_option( EVENTS_COLLECTOR_SETTING_NAME, $data );
+        update_option( EVENTS_COLLECTOR_SETTING_NAME, $events );
     }
 
-    send_ajax_response( $data );
+    send_ajax_response( $events );
 }
 
 
