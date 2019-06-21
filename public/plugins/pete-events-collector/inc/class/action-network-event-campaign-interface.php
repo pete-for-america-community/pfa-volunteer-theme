@@ -22,19 +22,18 @@ class APIInterface_ANEventCampaign extends apiInterface {
     public function __construct( $feedsEndpoint, $apiName ) {
         if (DEBUG) { error_log('API Interface created'); }
 
-        $feeds_response = $this->fetchEndpoint( $feedsEndpoint );
-        $parsed_feeds_response = $this->parseResponse( $feeds_response );
-        if (DEBUG) { error_log( '$parsed_feeds_response:' .  var_export($parsed_feeds_response, true ) ); }
-        if (DEBUG) { error_log( '$parsed_feeds_response["identifiers"]:' .  print_r($parsed_feeds_response["identifiers"], true ) ); }
+        //$feeds_response = $this->fetchEndpoint( $feedsEndpoint );
+        //$parsed_feeds_response = $this->parseResponse( $feeds_response );
+        //if (DEBUG) { error_log( '$parsed_feeds_response:' .  var_export($parsed_feeds_response, true ) ); }
+        //if (DEBUG) { error_log( '$parsed_feeds_response["identifiers"]:' .  print_r($parsed_feeds_response["identifiers"], true ) ); }
         
-        $eventsCampaignEndpoint = $parsed_feeds_response["_links"]["osdi:events"]["href"];
+        //$eventsCampaignEndpoint = $parsed_feeds_response["osdi:events"];
 
         //$endpoint =   filter_var( $this->response["_links"]["osdi:events"]["href"], FILTER_VALIDATE_URL ) ? filter_var( $this->response["_links"]["osdi:events"]["href"], FILTER_VALIDATE_URL ) : $this->response;
 
-        $this->apiName = $apiName;   
-        $this->endpoint = $eventsCampaignEndpoint;
-        $this->response = $this->fetchEndpoint( $eventsCampaignEndpoint );
-        $this->parsedResponse = $this->parseResponse( $this->response );
+        $this->apiName = $apiName;
+        $this->endpoint = $endpoint;
+        $this->parsedResponse = $this->processEndpoint( $endpoint );
     }
 
 
@@ -44,12 +43,13 @@ class APIInterface_ANEventCampaign extends apiInterface {
     */
     protected function applySourceMappings( $response_items ) {
         //Action Network specific structure here
-        //$events = $response_items["_embedded"]["osdi:events"];
-        if (DEBUG) { error_log( '$response_items: ' . print_r( $response_items, true) ); }
+        $events = $response_items["osdi:events"];
+        //if (DEBUG) { error_log( '$response_items: ' . print_r( $response_items, true) ); }
+        if (DEBUG) { error_log( '$events: ' . print_r( $events, true) ); }
 
         //$events_feed = $response_items["_links"]["osdi:events"]["href"];
 
-        $events = $response_items;
+        //$events = $response_items;
 
         //error_log( 'incoming $event_feed: ' . var_export( $events_feed, true ) );
 
