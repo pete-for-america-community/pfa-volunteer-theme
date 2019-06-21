@@ -61,8 +61,13 @@ class eventsManager {
      * @return the internal list of Events
      */
     public function getEvents() {
+        $output = array();
 
-        return $this->prepareEventList( $this->events );
+        foreach ( $this->events as $event ) {
+            $output[] = $event->getEventRecord();
+        }
+
+        return $this->prepareEventList( $output );
     }
 
 
