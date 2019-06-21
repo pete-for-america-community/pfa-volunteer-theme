@@ -24,6 +24,14 @@ abstract class apiInterface {
 
 
     /**
+    * Use the API-specific JSON structure to determine if the results point to additional pages of results
+    * 
+    * @return Bool
+    */
+    abstract protected function hasNextPage( $response );
+
+
+    /**
      * Consume the API on creation
      * 
      * @return void

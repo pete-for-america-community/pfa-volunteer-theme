@@ -90,4 +90,16 @@ class APIInterface_ANEventCampaign extends apiInterface {
         );
     }
 
+
+    /**
+    * Source-specific results paging structure
+    * 
+    * @return Boolean
+    */
+    protected function hasNextPage( $response ) {
+
+        return FALSE;
+
+    }
+
 }
