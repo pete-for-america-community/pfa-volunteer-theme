@@ -1,3 +1,7 @@
+const DEBUG = true;
+const INC_ACTION_NETWORK = false;
+const INC_MOBILIZE = true;
+
 // Options file URI, pluginPath injected by PHP
 if (typeof pluginPath !== 'undefined') {
     var mapOptionsFilename = pluginPath;
@@ -10,10 +14,6 @@ if (typeof eventsData !== 'undefined') {
 
 // The map we're displaying
 let map = null;
-
-// List of all events received from server
-// Currently that list is loaded from the events.json file.
-let eventList = null;
 
 // All the markers on the map (visible or not)
 let markers = [];
@@ -63,13 +63,29 @@ function buildContentString(name, date, address, description) {
     return cs;
 }
 
-
-function mapEvents() {
+// mapEvents take an array of events and creates a marker for each one, and an infoBubble (closed by default)
+// displaying the information for each event.
+// eventList: Array of events.
+function mapEvents(eventList) {
     // Now map each event.
     for (let e of eventList.events) {
         let infoBubble = null;
         let marker = null;
         try {
+            if (!INC_ACTION_NETWORK && e.source === "Action Network") {
+                if (DEBUG) {
+                    console.log("Skipping Action Network event: " + e.name);
+                }
+                continue;
+            }
+
+            if (!INC_MOBILIZE && e.source === "Mobilize") {
+                if (DEBUG) {
+                    console.log("Skipping Mobilize event: " + e.name);
+                }
+                continue;
+            }
+
             const loc = new google.maps.LatLng(e.latitude, e.longitude);
             const date = new Date(e.time);
             const contentString = buildContentString(e.name, date, e.addressLines, e.description);
@@ -102,7 +118,9 @@ function mapEvents() {
             });
         } catch (err) {
             // The event structure is missing data we expected.  We can just skip this event.
-            console.log("Skipping malformed event " + e + " reason: " + err);
+            if (DEBUG) {
+                console.log("Skipping malformed event " + e + " reason: " + err);
+            }
             continue;
         }
 
@@ -217,10 +235,11 @@ function setupControl() {
 
 // drawMap() is called after events are parsed from JSON, then draws
 // the markers, and draws the control panel.
-function drawMap() {
+// eventList: Array of event objects to mark on the map.
+function drawMap(eventList) {
     // Very simple function for now, but we may want many different types of things on this
     // map beyond events.
-    mapEvents();
+    mapEvents(eventList);
     setupControl();
 }
 
@@ -272,12 +291,12 @@ function initMap() {
 
         if (serverEventsList == null) {
             getEventJSON(function (response) {
-                eventList = JSON.parse(response);
-                drawMap();
+                let eventList = JSON.parse(response);
+                drawMap(eventList);
             });
         } else {
-            eventList = serverEventsList;
-            drawMap();
+            let eventList = serverEventsList;
+            drawMap(eventList);
         }
     })
 
