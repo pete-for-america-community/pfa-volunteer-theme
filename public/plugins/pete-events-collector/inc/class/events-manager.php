@@ -34,7 +34,7 @@ class eventsManager {
     */
     public function addEvents( $events ) {
 
-        if (DEBUG) { error_log('adding events: ' . var_export($events, true) ); }
+        if (DEBUG) { error_log('adding events.'); }
 
         if ( is_array( $events ) ) {
             foreach( $events as $event ) {
@@ -61,8 +61,13 @@ class eventsManager {
      * @return the internal list of Events
      */
     public function getEvents() {
+        $output = array();
 
-        return $this->prepareEventList( $this->events );
+        foreach ( $this->events as $event ) {
+            $output[] = $event->getEventRecord();
+        }
+
+        return $this->prepareEventList( $output );
     }
 
 

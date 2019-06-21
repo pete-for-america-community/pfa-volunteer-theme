@@ -67,42 +67,45 @@ function buildContentString(name, date, address, description) {
 function mapEvents() {
     // Now map each event.
     for (let e of eventList.events) {
-        const loc = new google.maps.LatLng(e.location.lat, e.location.lng);
-        const date = new Date(e.time);
-        const contentString = buildContentString(e.name, date, e.address_lines, e.description);
-        const infoBubble = new InfoBubble({
-            content: contentString,
-            maxWidth: 200,
-            minHeight: 10,
-            // This gap is necessary to avoid the bubble changing the target
-            // and causing a mouseout event (flicker of the bubble)
-            pixelOffset: new google.maps.Size(0, -15),
-            disableAnimation: true,
-            visible: false,
-            backgroundClassName: "bubble"
-        });
+        let infoBubble = null;
+        let marker = null;
+        try {
+            const loc = new google.maps.LatLng(e.latitude, e.longitude);
+            const date = new Date(e.time);
+            const contentString = buildContentString(e.name, date, e.addressLines, e.description);
+            infoBubble = new InfoBubble({
+                content: contentString,
+                maxWidth: 200,
+                minHeight: 10,
+                // This gap is necessary to avoid the bubble changing the target
+                // and causing a mouseout event (flicker of the bubble)
+                pixelOffset: new google.maps.Size(0, -15),
+                disableAnimation: true,
+                visible: false,
+                backgroundClassName: "bubble"
+            });
 
-        const scaled_icon = {
-            url: "http://maps.google.com/mapfiles/ms/icons/orange-dot.png",
-            // size: new google.maps.Size(16, 16),
-            // scaledSize: new google.maps.Size(16, 16),
-        };
+            // WARNING: HACK
+            // I'm not sure if this should be the same path or not.  Check with Jared.
+            let path = "Pete Face.svg";
+            if (typeof mapOptionsFilename !== 'undefined') {
+                path = mapOptionsFilename + path;
+            }
 
-        // WARNING: HACK
-        // I'm not sure if this should be the same path or not.  Check with Jared.
-        let path = "Pete Face.svg";
-        if (typeof mapOptionsFilename !== 'undefined') {
-            path = mapOptionsFilename + path;
+            marker = new google.maps.Marker({
+                position: loc,
+                title: name,
+                map: map,
+                icon: { url: path, scaledSize: new google.maps.Size(50,50) },
+                opacity: 0.7,
+                date: date
+            });
+        } catch (err) {
+            // The event structure is missing data we expected.  We can just skip this event.
+            console.log("Skipping malformed event " + e + " reason: " + err);
+            continue;
         }
 
-        const marker = new google.maps.Marker({
-            position: loc,
-            title: name,
-            map: map,
-            icon: { url: path, scaledSize: new google.maps.Size(50,50) },
-            opacity: 0.7,
-            date: date
-        });
 
         marker.addListener("click", function clickListener() {
             if (!autoBubble) {

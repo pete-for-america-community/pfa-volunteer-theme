@@ -1,6 +1,7 @@
 # Pete For America
 
 **Grassroots Website WordPress theme**
+Version: 0.1.0
 
 A WordPress theme designed to help catapult Pete Buttigieg into the White House, by empowering our grassroots volunteer network to collaboarate nationally, and publicize their effors. This theme is built with the goal of leveraging our volunteer coding team in a flexible and easy-to-manipulate framework, without the minimum required complexity of tooling.
 

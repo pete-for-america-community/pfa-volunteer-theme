@@ -29,8 +29,8 @@ class APIInterface_ActionNetwork extends apiInterface {
                 
             $parsed_events[] = new Event( 
                 $event['title'], //$name, 
-                $event['description'], //$description, 
                 $event['location']['address_lines'], //$addressLines, 
+                $event['description'], //$description, 
                 $event['location']['location']['latitude'], //$latitude, 
                 $event['location']['location']['longitude'], //$longitude, 
                 $event['identifiers'][0], //$originalID
@@ -52,6 +52,18 @@ class APIInterface_ActionNetwork extends apiInterface {
         return array(
             'OSDI-API-Token' => ACTION_NETWORK_API_KEY
         );
+    }
+
+
+    /**
+    * Source-specific results paging structure
+    * 
+    * @return Boolean
+    */
+    protected function hasNextPage( $response ) {
+
+        return FALSE;
+
     }
 
 }

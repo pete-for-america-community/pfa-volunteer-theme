@@ -12,10 +12,12 @@ License: MIT
 // Constants
 
 define( "EVENTS_COLLECTOR_SETTING_NAME",                "events_collector_options" );
-define( "ACTION_NETWORK_EVENTS_ENDPOINT",               "https://actionnetwork.org/api/v2/events/" );
-define( "ACTION_NETWORK_EVENTS_CAMPAIGN_ENDPOINT",      "https://actionnetwork.org/api/v2/event_campaigns" );
 define( "AN_EVENTS_NAME",                               "Action Network" );
+define( "ACTION_NETWORK_EVENTS_ENDPOINT",               "https://actionnetwork.org/api/v2/events/" );
 define( "AN_EVENTS_CAMPAIGN_NAME",                      "Action Network - Events Campaign" );
+define( "ACTION_NETWORK_EVENTS_CAMPAIGN_ENDPOINT",      "https://actionnetwork.org/api/v2/event_campaigns" );
+define( "MOBILIZE_EVENTS_NAME",                         "Mobilize" );
+define( "MOBILIZE_EVENTS_ENDPOINT",                     "https://api.mobilize.us/v1/organizations/1297/events" );
 define( "MAP_SHORTCODE_FILENAME",                       "map-shortcode.php");
 define( "SETTINGS_PAGE_MENU_SLUG",                      "events-collector");
 define( "SETTINGS_PAGE_FILENAME",                       "settings-page.php");
@@ -29,10 +31,12 @@ define( "DEBUG", TRUE );
 require_once plugin_dir_path( __FILE__ ) . "inc/class/api-interface.php";
 require_once plugin_dir_path( __FILE__ ) . "inc/class/action-network-interface.php";
 require_once plugin_dir_path( __FILE__ ) . "inc/class/action-network-event-campaign-interface.php";
+require_once plugin_dir_path( __FILE__ ) . "inc/class/mobilize-interface.php";
 require_once plugin_dir_path( __FILE__ ) . "inc/class/database-record.php";
 require_once plugin_dir_path( __FILE__ ) . "inc/class/events-manager.php";
 
 //Load main events manager
+global $EventsManager;
 $EventsManager = new EventsManager();
 
 //Load the secret API keys
@@ -103,15 +107,16 @@ function fetch_api_data( $eManager = null, $update = true, $endpoint = ACTION_NE
             $apiInterface = new APIInterface_ActionNetwork( $endpoint, $api_name );
         } else if ( $api_name == AN_EVENTS_CAMPAIGN_NAME ) {
             $apiInterface = new APIInterface_ANEventCampaign( $endpoint, $api_name );
-        } else {
-
+        } else if ( $api_name == MOBILIZE_EVENTS_NAME ) {
+            $apiInterface = new APIInterface_Mobilize( $endpoint, $api_name );
         }
         
         $parsed_events = $apiInterface->getParsedResponse();
 
-        error_log( var_export( $parsed_events, true ) );
- 
-        $eManager->addEvents( $parsed_events );
+        error_log( 'parsed_events: ', var_export( $parsed_events, true ) );
+        if ( is_array( $parsed_events ) ) {
+            $eManager->addEvents( $parsed_events );
+        }
         $result = $eManager->getEvents();
 
     } catch ( Exception $e ) {
@@ -133,18 +138,19 @@ function fetch_api_data( $eManager = null, $update = true, $endpoint = ACTION_NE
 }
 // @todo? Create a table with our event results
 // For now, trigger on page load:
-fetch_api_data( $EventsManager, TRUE, ACTION_NETWORK_EVENTS_ENDPOINT, 'Action Network' );
+//fetch_api_data( $EventsManager, TRUE, ACTION_NETWORK_EVENTS_ENDPOINT, AN_EVENTS_NAME );
+//fetch_api_data( $EventsManager, TRUE, MOBILIZE_EVENTS_ENDPOINT, MOBILIZE_EVENTS_NAME );
 //Need to handle multi-page events 'categories':
-//fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/aafc4b0f-38ff-4cae-8891-8b6dec64b170', 'Action Network - Events Campaign' );
-//fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/5565fc1e-b0bf-43e8-ad66-13bdb9605d7f', 'Action Network - Events Campaign' );
-//fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/8765fc89-1ec6-44ea-87ef-5b3d5e6eb848', 'Action Network - Events Campaign' );
+//fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/aafc4b0f-38ff-4cae-8891-8b6dec64b170/events', 'Action Network - Events Campaign' );
+//fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/5565fc1e-b0bf-43e8-ad66-13bdb9605d7f/events', 'Action Network - Events Campaign' );
+//fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/8765fc89-1ec6-44ea-87ef-5b3d5e6eb848/events', 'Action Network - Events Campaign' );
 
 
 /**
 * Add the AJAX endpoint for our internal settings form (logged-in users only)
 * 
 */
-add_action( 'wp_ajax_events_collector_settings', 'ajax_fetch_api_data' );
+add_action( 'wp_ajax_regenerate_cache', 'ajax_fetch_api_data' );
 add_action( 'wp_ajax_retrieve_cache', 'ajax_retrieve_cache' );
 add_action( 'wp_ajax_clear_cache', 'ajax_clear_cache' );
 add_action( 'wp_ajax_manual_endpoint_fetch', 'ajax_retrieve_cache' );
@@ -154,22 +160,28 @@ add_action( 'wp_ajax_manual_endpoint_fetch', 'ajax_retrieve_cache' );
  * Perform a new API request and return the data as a response
  */
 function ajax_fetch_api_data() {
+    global $EventsManager;
 
     $endpoint = array_key_exists( 'endpoint', $_POST ) ? $_POST['endpoint'] : NULL;
     $update = array_key_exists( 'update', $_POST ) ? $_POST['update'] : TRUE;
 
     // Perform the api fetch
     if ( $endpoint ) { 
-        $data = fetch_api_data( $update, $endpoint ); //optional Endpoint coming from JS
+        $events = fetch_api_data( $EventsManager, $update, $endpoint, 'Manual Endpoint ' ); //optional Endpoint coming from JS
     } else {
-        $data = fetch_api_data( $update ); 
+        fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/aafc4b0f-38ff-4cae-8891-8b6dec64b170', 'Action Network - Events Campaign' );
+        fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/5565fc1e-b0bf-43e8-ad66-13bdb9605d7f', 'Action Network - Events Campaign' );
+        fetch_api_data( $EventsManager, TRUE, 'https://actionnetwork.org/api/v2/event_campaigns/8765fc89-1ec6-44ea-87ef-5b3d5e6eb848', 'Action Network - Events Campaign' );
+        fetch_api_data( $EventsManager, TRUE, ACTION_NETWORK_EVENTS_ENDPOINT, AN_EVENTS_NAME );
+        fetch_api_data( $EventsManager, TRUE, MOBILIZE_EVENTS_ENDPOINT, MOBILIZE_EVENTS_NAME );
+        $events = $EventsManager->getEvents();
     }
 
     if ( $_POST['update'] === "TRUE" ) {
-        update_option( EVENTS_COLLECTOR_SETTING_NAME, $data );
+        update_option( EVENTS_COLLECTOR_SETTING_NAME, $events );
     }
 
-    send_ajax_response( $data );
+    send_ajax_response( $events );
 }
 
 
