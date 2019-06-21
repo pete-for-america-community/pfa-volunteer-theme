@@ -24,6 +24,14 @@ abstract class apiInterface {
 
 
     /**
+    * Use the API-specific JSON structure to determine if the results point to additional pages of results
+    * 
+    * @return Bool
+    */
+    abstract protected function hasNextPage( $response );
+
+
+    /**
      * Consume the API on creation
      * 
      * @return void
@@ -33,8 +41,7 @@ abstract class apiInterface {
 
         $this->apiName = $apiName;
         $this->endpoint = $endpoint;
-        $this->response = $this->fetchEndpoint( $endpoint );
-        $this->parsedResponse = $this->parseResponse( $this->response );
+        $this->parsedResponse = $this->processEndpoint( $endpoint );
     }
 
 
@@ -44,7 +51,9 @@ abstract class apiInterface {
     * @return WP_Error | Array(Root response items)
     */
     public function getParsedResponse() {
+
         return $this->parsedResponse;
+        
     }
 
 
@@ -117,6 +126,41 @@ abstract class apiInterface {
 
 
     /** 
+    * Perform as many API calls as it takes to receive all the results from an API (paged or not)
+    * 
+    * @return Array(Events)
+    */
+    protected function processEndpoint( $endpoint ) {
+
+        $original_endpoint = $endpoint;
+        $combined_results = array();
+        $page = 1;
+
+        do {
+
+            // Fetch the main endpoint for the first time
+            $results_page = $this->fetchEndpoint( $endpoint );
+
+            $results = $this->parseResponse( $results_page );
+
+            $combined_results = array_merge( $combined_results, $results['events'] );
+
+            if ( $results['next'] ) {
+                if (DEBUG) { error_log( '$page' . $page . ' (endpoint:' . $endpoint . ') is pointing "Next" to: ' . $results['next'] ); }
+                if (DEBUG) { error_log( '$combined_results: ' . var_export( $combined_results, true) ); }
+                $page++;
+            }
+            $endpoint = $results['next'];
+        } while ( $endpoint );
+
+        if (DEBUG) { error_log( '$endpoint "' . $original_endpoint . '" is exhausted of result pages'. ' | Total results: ' . print_r( $combined_results, true) ); }
+
+        return $combined_results;
+
+    }
+
+
+    /** 
     * Perform an API request
     * 
     * @return String (JSON) API Data
@@ -155,12 +199,11 @@ abstract class apiInterface {
         
         if ( DEBUG ) {
             //error_log( '$response: ' . print_r( $response, true )  );
-            error_log( '$response["body"]: ' . print_r( $response["body"], true )  );
+            //error_log( '$response["body"]: ' . print_r( $response["body"], true )  );
         }
 
         //Update
-        $this->response = $response['body'];
-        return $this->response;
+        return $response['body'];
     
     }
 
@@ -171,17 +214,21 @@ abstract class apiInterface {
     * @return Array(Events)
     */
     protected function parseResponse( $response ) {
-        if (DEBUG) { error_log('parseResponse called - $response: ' . print_r( $response, true ) ); }
+        //if (DEBUG) { error_log('parseResponse called - $response: ' . print_r( $response, true ) ); }
 
         //Ensure response is JSON
         $response_items = $this->processJSON( $response );
+
         if ( is_wp_error( $response_items ) ) { throw new Exception( $response_items->get_error_message() ); }
+
+        // Determine if the parsed response is pointing to an additional page of results
+        $next_page = $this->hasNextPage( $response_items );
 
         $parsed_events = $this->applySourceMappings( $response_items );
 
-        if ( DEBUG ) { error_log( "Processed events: " . print_r( $parsed_events, true ) ); }
+        //if ( DEBUG ) { error_log( "Parsed events: " . print_r( $parsed_events, true ) ); }
 
-        return $parsed_events;
+        return array( 'events' => $parsed_events, 'next' => $next_page );
     }
 
 }

@@ -104,4 +104,20 @@ class APIInterface_Mobilize extends apiInterface {
         return array(); // Mobilize is public; no special request headers
     }
 
+
+    /**
+     * Source-specific results paging structure
+     * 
+     * @return String Endpoint | Boolean
+     */
+    protected function hasNextPage( $response ) {
+
+        if ( array_key_exists( 'next', $response ) && $response['next'] ) {
+            return $response['next'];
+        }
+
+        return FALSE;
+
+    }
+
 }
