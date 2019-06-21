@@ -81,8 +81,8 @@ class APIInterface_Mobilize extends apiInterface {
                 
             $parsed_events[] = new Event( 
                 $event['title'], //$name, 
-                $event['description'], //$description, 
                 $event['location']['address_lines'], //$addressLines, 
+                $event['description'], //$description, 
                 $event['location']['location']['latitude'], //$latitude, 
                 $event['location']['location']['longitude'], //$longitude, 
                 'mobilize-' . $event['id'], //Mobilize doesn't prefix its identifier.  id: 87626
