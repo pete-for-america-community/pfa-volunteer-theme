@@ -250,9 +250,9 @@ function initMap() {
     if (typeof mapOptionsFilename !== 'undefined') {
         path = mapOptionsFilename + path;
     }
-    $.getJSON(pluginPath + "map-options.json", function (mapstyle) {
-        let mElement = document.getElementById("map");
-        map = new google.maps.Map(mElement, {
+    $.getJSON(path, function (mapstyle) {
+	let mElement = document.getElementById("map");
+        map = new google.maps.Map(mElement, {	    
             zoom: 5,
             center: { lat: 37.435851, lng: -122.133246 },
             zoomControl: true,
