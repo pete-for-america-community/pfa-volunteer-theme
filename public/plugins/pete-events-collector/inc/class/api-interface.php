@@ -2,7 +2,7 @@
 abstract class apiInterface {
 
     private $endpoint; // String
-    private $apiName; // String
+    protected $apiName; // String
     private $response; // JSON object
     private $parsedResponse; // JSON Object
 
