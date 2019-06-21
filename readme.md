@@ -92,6 +92,10 @@ We welcome contributions! In fact, that's the point of this theme - to be quick,
 - **Jared Parmenter** - _Initial work_ - [jagp](https://github.com/jagp)
 - **Brian Guggenheim** - _Setup and Administration_ - [bguggs](https://github.com/bguggs)
 - **Amy Rosenthal** - _Frontend Design_
+- **Lynn Nichols** - WordPress Implementation
+- **Lori Boyer** - WordPress Implementation
+- **Daniel Sturman** - EventsMapper plugin - [dcsturman](https://github.com/dcsturman)
+- **Shreyes Seshasai**
 
 ## License
 
