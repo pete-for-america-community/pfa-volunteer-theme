@@ -1,17 +1,47 @@
 <?php 
 /*
-`"event" : {
-    "name": "Chelsea's Place",
-    "address_lines":[
-        "107 S Mary Avenue",
-        "San Jose, CA 95003"
-        ]
-    "description" : "This will be a great event where we watch Pete arm-wrestle Trump on live TV.  Come join us for a great party including yummy snacks."
-    "location": {
-        "lat" : 37.245786218032435,
-        "lng" : -121.78339102296239
+{
+"identifiers": [
+    "action_network:fc36cb3d-a92d-495f-9bb4-8a13d4f05a07"
+],
+"created_date": "2019-05-18T04:36:54Z",
+"description": "<p>[Hosts, please add details for your guests here.]</p>",
+"start_date": "2019-05-18T21:30:00Z",
+"reminders": [
+    {
+    "method": "email",
+    "minutes": 1440
     }
-    }' 
+],
+"total_accepted": 1,
+"action_network:event_campaign_id": "aafc4b0f-38ff-4cae-8891-8b6dec64b170",
+"location": {
+    "venue": "Chelsea's Apartment",
+    "address_lines": [
+    "107 S Mary Avenue"
+    ],
+    "locality": "Sunnyvale",
+    "region": "CA",
+    "postal_code": "94086",
+    "country": "US",
+    "location": {
+    "latitude": 37.382277603670104,
+    "longitude": -122.04499231614619,
+    "accuracy": "Rooftop"
+    }
+},
+"modified_date": "2019-05-18T04:38:51Z",
+"status": "confirmed",
+"transparence": "opaque",
+"visibility": "public",
+"guests_can_invite_others": true,
+"origin_system": "Action Network",
+"title": "Fake Event",
+"name": "",
+"browser_url": "https://actionnetwork.org/events/fake-event-8",
+"instructions": "<p>[Please put detailed instructions for your guests to see here. How to get to the location, ADA accessibility, and parking situation]</p>",
+"action_network:hidden": false
+}
 */
 class APIInterface_ActionNetwork extends apiInterface {
 
@@ -34,7 +64,9 @@ class APIInterface_ActionNetwork extends apiInterface {
                 $event['location']['location']['latitude'], //$latitude, 
                 $event['location']['location']['longitude'], //$longitude, 
                 $event['identifiers'][0], //$originalID
-                $this->apiName //$source, 
+                $this->apiName, //$source, 
+                $event['browser_url'], //$link, 
+                $event['start_date'] //$start_date, 
             );
         }
 
