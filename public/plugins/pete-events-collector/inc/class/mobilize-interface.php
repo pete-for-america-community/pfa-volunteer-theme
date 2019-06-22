@@ -86,7 +86,11 @@ class APIInterface_Mobilize extends apiInterface {
                 $event['location']['location']['latitude'], //$latitude, 
                 $event['location']['location']['longitude'], //$longitude, 
                 'mobilize-' . $event['id'], //Mobilize doesn't prefix its identifier.  id: 87626
-                $this->apiName //$source, 
+                $this->apiName, //$source, 
+                $event['browser_url'], //$link
+                $event['timeslots'][0]['start_date'], //$start_date
+                $event['timeslots'][0]['end_date'] //$start_date
+
             );
         }
 
