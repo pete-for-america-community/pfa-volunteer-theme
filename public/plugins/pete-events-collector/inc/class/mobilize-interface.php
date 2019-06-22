@@ -88,7 +88,9 @@ class APIInterface_Mobilize extends apiInterface {
                 'mobilize-' . $event['id'], //Mobilize doesn't prefix its identifier.  id: 87626
                 $this->apiName, //$source, 
                 $event['browser_url'], //$link
-                $event['timeslots'][0]['start_date'] //$start_date
+                $event['timeslots'][0]['start_date'], //$start_date
+                $event['timeslots'][0]['end_date'] //$start_date
+
             );
         }
 

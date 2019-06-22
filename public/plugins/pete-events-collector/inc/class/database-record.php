@@ -10,6 +10,7 @@ class Event {
     public $source;
     public $link;
     public $start_date;
+    public $end_date;
 
     /*
 
@@ -27,11 +28,12 @@ class Event {
         },
         "source" : "Action Network",
         "link" :  "https://www.mobilize.us/peteforamerica/event/87626/",
-        "start_date" : "1551722400"
+        "start_date" : 1551722400,
+        "end_date" : 1551722400
         }' 
     */
 
-    public function __construct( $name, $addressLines, $description, $latitude, $longitude, $originalID, $source, $link, $start_date ) {
+    public function __construct( $name, $addressLines, $description, $latitude, $longitude, $originalID, $source, $link, $start_date, $end_date ) {
         error_log('Database Record created');
 
         $this->name = $name;
@@ -50,7 +52,13 @@ class Event {
         } else {
             $this->start_date = $start_date;
         }
-
+        
+        $unix_time = strtotime( $end_date );
+        if ( $unix_time ) { 
+            $this->end_date = $unix_time;
+        } else {
+            $this->end_date = $end_date;
+        }
         
     }
 
@@ -72,7 +80,8 @@ class Event {
             ),
             'source' => $this->source,
             'link' => $this->link,
-            'start_date' => $this->start_date
+            'start_date' => $this->start_date,
+            'end_date' => $this->end_date
             
         );
     
