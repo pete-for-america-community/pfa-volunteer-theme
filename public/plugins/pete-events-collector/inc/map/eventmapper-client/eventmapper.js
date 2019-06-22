@@ -1,6 +1,8 @@
 const DEBUG = true;
 const INC_ACTION_NETWORK = false;
 const INC_MOBILIZE = true;
+const GIST_HACK = true;
+const SAMPLE_DATA = "full-gist.json";
 
 // Options file URI, pluginPath injected by PHP
 if (typeof pluginPath !== 'undefined') {
@@ -46,8 +48,10 @@ function buildContentString(name, date, address, description) {
     const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
 
     let addrString = '<p class="bubbleAddr">';
-    for (let a of address) {
-        addrString += `${a}<br>`;
+    if (address !== null) {
+        for (let a of address) {
+            addrString += `${a}<br>`;
+        }
     }
     addrString += '<\p>';
 
@@ -86,9 +90,20 @@ function mapEvents(eventList) {
                 continue;
             }
 
-            const loc = new google.maps.LatLng(e.latitude, e.longitude);
+            if (e.location === null) {
+                if (DEBUG) {
+                    console.log("Skipping event " + e.name + " with no location.");
+                    continue;
+                }
+            }
+            const loc = new google.maps.LatLng(e.location.lat, e.location.lng);
             const date = new Date(e.time);
-            const contentString = buildContentString(e.name, date, e.addressLines, e.description);
+
+            if (DEBUG && e.address_lines === null) {
+                console.log("No address in event " + e.name);
+            }
+            const contentString = buildContentString(e.name, date, e.address_lines, e.description);
+
             infoBubble = new InfoBubble({
                 content: contentString,
                 maxWidth: 200,
@@ -252,8 +267,12 @@ function getEventJSON(callback) {
     // For now we read this from a file.  Later we"ll make reading from the file test mode
     // and will call the server instead.
     let xobj = new XMLHttpRequest();
+    let filename = SAMPLE_DATA;
+    if (typeof mapOptionsFilename !== 'undefined') {
+        filename = mapOptionsFilename + filename;
+    }
     xobj.overrideMimeType("application/json");
-    xobj.open("GET", "events.json", true);
+    xobj.open("GET", filename, true);
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
             // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
@@ -289,7 +308,7 @@ function initMap() {
             styles: mapstyle,
         });
 
-        if (serverEventsList == null) {
+        if (serverEventsList == null || GIST_HACK) {
             getEventJSON(function (response) {
                 let eventList = JSON.parse(response);
                 drawMap(eventList);
