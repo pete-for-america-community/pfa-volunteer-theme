@@ -91,6 +91,8 @@
   function regenerateCache(e, output) {
     //console.log("regenerateCache function triggered");
 
+    $('#regenerateCache').find('.spinner').addClass('active');
+
     //Disable the button
     e.preventDefault();
 
@@ -101,15 +103,23 @@
         action: "regenerate_cache",
         update: "TRUE"
       },
-      function (response) { }
+      function (response) { $('#regenerateCache').find('.spinner').removeClass('active'); }
     )
       .done(function (response) {
         //console.log("success!", response);
         // If successful, update the display area with the response
         output.val(JSON.stringify(response));
+        $('#regenerateCache').find('.check').addClass('active');
+        setTimeout(function () {
+          $('#regenerateCache').find('.check').removeClass('active');
+        }, 1000);
       })
       .fail(function () {
         //Process failed requests
+        $('#regenerateCache').find('.cross').addClass('active');
+        setTimeout(function () {
+          $('#regenerateCache').find('.cross').removeClass('active');
+        }, 1000);
         console.log("[Events Collector] Error in WP Admin AJAX");
       });
   }
