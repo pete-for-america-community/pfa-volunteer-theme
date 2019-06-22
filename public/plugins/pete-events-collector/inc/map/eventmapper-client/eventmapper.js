@@ -57,7 +57,9 @@ function buildContentString(name, date, address, description) {
     if (address !== null) {
         addrString +=  '<p class="bubbleAddr">';
         for (let a of address) {
-            addrString += `${a}<br>`;
+            if (a !== "") {
+                addrString += `${a}<br>`;
+            }
         }
         addrString += '<\p>';
     }
