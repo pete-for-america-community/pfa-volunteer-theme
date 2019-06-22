@@ -1,8 +1,8 @@
 const DEBUG = true;
 const INC_ACTION_NETWORK = false;
 const INC_MOBILIZE = true;
-const GIST_HACK = true;
-const SAMPLE_DATA = "full-gist.json";
+const USE_TEST_DATA = true;
+const TEST_DATA = "full-test-data.json";
 
 // Options file URI, pluginPath injected by PHP
 if (typeof pluginPath !== 'undefined') {
@@ -42,24 +42,30 @@ function locToString(loc) {
 //          of the address of the event (string[])
 // description: Body of the content. (string)
 function buildContentString(name, date, address, description) {
-    const dateOptions = { year: "numeric", month: "long", day: "numeric" };
-    const formattedDate = date.toLocaleDateString("en-US", dateOptions);
-    const timeOptions = { hour: "numeric", minute: "2-digit"};
-    const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
 
-    let addrString = '<p class="bubbleAddr">';
+    let whenString = "";
+    if (date !== null) {
+        const dateOptions = { year: "numeric", month: "long", day: "numeric" };
+        const formattedDate = date.toLocaleDateString("en-US", dateOptions);
+        const timeOptions = { hour: "numeric", minute: "2-digit"};
+        const formattedTime = date.toLocaleTimeString("en-US", timeOptions);
+        whenString += `<p class="bubbleDate"><i>${formattedDate} at ${formattedTime}</i></p>`;
+    }
+
+    let addrString = "";
+
     if (address !== null) {
+        addrString +=  '<p class="bubbleAddr">';
         for (let a of address) {
             addrString += `${a}<br>`;
         }
+        addrString += '<\p>';
     }
-    addrString += '<\p>';
 
     const cs = '<div class="bubbleText">' +
         `<h1 class="bubbleHeader">${name}</h1>` +
-        `<p class="bubbleDate"><i>${formattedDate} at ` +
-        `${formattedTime}</i></p>`+
         addrString +
+        whenString +
         '<div class="bubbleContent">' +
         `<p>${description}</p>` +
         '</div>' +
@@ -97,7 +103,10 @@ function mapEvents(eventList) {
                 }
             }
             const loc = new google.maps.LatLng(e.location.lat, e.location.lng);
-            const date = new Date(e.time);
+            let date = null;
+            if (typeof e.time !== 'undefined') {
+                date = new Date(e.time);
+            }
 
             if (DEBUG && e.address_lines === null) {
                 console.log("No address in event " + e.name);
@@ -267,7 +276,7 @@ function getEventJSON(callback) {
     // For now we read this from a file.  Later we"ll make reading from the file test mode
     // and will call the server instead.
     let xobj = new XMLHttpRequest();
-    let filename = SAMPLE_DATA;
+    let filename = TEST_DATA;
     if (typeof mapOptionsFilename !== 'undefined') {
         filename = mapOptionsFilename + filename;
     }
@@ -308,7 +317,7 @@ function initMap() {
             styles: mapstyle,
         });
 
-        if (serverEventsList == null || GIST_HACK) {
+        if (serverEventsList == null || USE_TEST_DATA) {
             getEventJSON(function (response) {
                 let eventList = JSON.parse(response);
                 drawMap(eventList);
