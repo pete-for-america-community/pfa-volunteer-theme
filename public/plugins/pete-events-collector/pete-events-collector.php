@@ -36,8 +36,8 @@ require_once plugin_dir_path( __FILE__ ) . "inc/class/database-record.php";
 require_once plugin_dir_path( __FILE__ ) . "inc/class/events-manager.php";
 
 //Load main events manager
-global $EventsManager;
 $EventsManager = new EventsManager();
+$GLOBALS['EventsManager'] = $EventsManager;
 
 //Load the secret API keys
 require_once plugin_dir_path( __FILE__ ) . "private/" . SECRET_KEY_FILENAME;
@@ -160,8 +160,8 @@ add_action( 'wp_ajax_manual_endpoint_fetch', 'ajax_retrieve_cache' );
  * Perform a new API request and return the data as a response
  */
 function ajax_fetch_api_data() {
-    global $EventsManager;
 
+    $EventsManager = $GLOBALS['EventsManager'];
     $endpoint = array_key_exists( 'endpoint', $_POST ) ? $_POST['endpoint'] : NULL;
     $update = array_key_exists( 'update', $_POST ) ? $_POST['update'] : TRUE;
 
