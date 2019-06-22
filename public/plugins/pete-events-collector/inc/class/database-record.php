@@ -43,11 +43,12 @@ class Event {
         $this->source = $source;
         $this->link = $link;
 
+        // Determine if the api's original time format was UNIX or one of many string formats
         $unix_time = strtotime( $start_date );
         if ( $unix_time ) { 
             $this->start_date = $unix_time;
         } else {
-            $this->start_date = "invalid start date";
+            $this->start_date = $start_date;
         }
 
         
