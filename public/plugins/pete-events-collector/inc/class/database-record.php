@@ -55,22 +55,12 @@ class Event {
         $this->addressLines[] = $this->town . ', ' . $this->state . ' ' . $this->zip;
 
         // Determine if the api's original time format was UNIX or one of many string formats
-        $unix_time = strtotime( $start_date );
-        if ( $unix_time ) { 
-            $this->start_date = date( DATE_W3C, $unix_time );
+        $this->state_date = $this->parepareTime( $this->state_date );
+
+        if ( ! $end_date ) { 
+            $this->end_date = null; 
         } else {
-            $this->start_date = date( DATE_W3C, $start_date );
-        }
-        
-        if ( $end_date ) {
-            $unix_time = strtotime( $end_date );
-            if ( $unix_time ) { 
-                $this->end_date = date( DATE_W3C, $unix_time );
-            } else {
-                $this->end_date = date( DATE_W3C, $end_date );
-            }
-        } else {
-            $this->end_date = null;
+            $this->end_date = $this->parepareTime( $this->state_date );
         }
         
     }
@@ -115,5 +105,14 @@ class Event {
 
     public function getOriginalID() {
         return $this->originalID;
+    }
+
+    private function prepareTime( $unknown_time ) {
+        $unix_time = strtotime( $unknown_time );
+        if ( $unix_time ) { 
+            return date( DATE_W3C, $unix_time );
+        } else {
+            return date( DATE_W3C, $unknown_time );
+        }
     }
 }
