@@ -37,7 +37,7 @@ function register_map_shortcode( $args ){
 
     <!-- Expose events API to the front end -->
     <script>
-        var <?php echo $args['cache_var_name']; ?> = <?php echo $EventsManager->getEventsJSON(); ?>;
+        var <?php echo $args['cache_var_name']; ?> = <?php echo print_r( json_encode( get_option( EVENTS_COLLECTOR_SETTING_NAME ) ), true ); ?>;
         var pluginPath = "<?php echo plugins_url( EVENTMAPPER_PATH . '/', "map-options.json" ); ?>";
     </script>
 

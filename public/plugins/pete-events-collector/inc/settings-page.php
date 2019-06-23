@@ -4,6 +4,8 @@
 $output_content = get_option('events_collector_options');
 
 $spinner = '<div class="spinner"></div>';
+$check = '<span class="check dashicons dashicons-yes"></span>';
+$cross = '<span class="cross dashicons dashicons-no"></span>';
 ?>
 <div class="wrap events-collector">
 
@@ -22,7 +24,7 @@ $spinner = '<div class="spinner"></div>';
                     <hr><br>
                     <button id="displayResults" class="button-secondary">See Current Cache<?php echo $spinner; ?></button>
                     <button id="clearCache" class="button-secondary">Clear Cache<?php echo $spinner; ?></button>
-                    <button id="regenerateCache" class="button-secondary">Regenerate Cache<?php echo $spinner; ?></button>
+                    <button id="regenerateCache" class="button-secondary">Regenerate Cache<?php echo $spinner; echo $check; echo $cross; ?></button>
                     <br><hr><br>
                     <input id="manualEndpoint" type="text">
                     <button id="manualEndpointButton" class="button-secondary">Manual Endpoint Check<?php echo $spinner; ?></button>
