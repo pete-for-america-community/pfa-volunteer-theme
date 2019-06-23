@@ -8,8 +8,23 @@
   text-align: left;
 }
 
+.spinner, .check, .cross { 
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.spinner.active, .check.active, .cross.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+.spinner, .check, .cross {
+  position: absolute;
+  margin-left: 10px;
+}
+
 .spinner {
-  margin-left: 5%;
+  margin-top: 7px;  
   background-size: 15px 15px;
   height: 15px;
   width: 15px;
@@ -18,3 +33,6 @@
   clear: both;
   vertical-align: text-bottom;
 }
+
+.check { color: green; margin-top: 4px; }
+.cross { color: red; margin-top: 4px; }
