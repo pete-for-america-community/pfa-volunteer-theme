@@ -106,8 +106,8 @@ function mapEvents(eventList) {
             }
             const loc = new google.maps.LatLng(e.location.lat, e.location.lng);
             let date = null;
-            if (typeof e.time !== 'undefined') {
-                date = new Date(e.time);
+            if (typeof e.start_date !== 'undefined') {
+                date = new Date(e.start_date);
             }
 
             if (DEBUG && e.address_lines === null) {
