@@ -67,7 +67,10 @@ class APIInterface_ActionNetwork extends apiInterface {
                 $this->apiName, //$source, 
                 $event['browser_url'], //$link, 
                 $event['start_date'], //$start_date, 
-                $event['end_date'] //$start_date, 
+                $event['end_date'], //$start_date, 
+                $event['location']['locality'], //$town, 
+                $event['location']['region'], //$state, 
+                $event['location']['postal_code'] //$zip, 
             );
         }
 

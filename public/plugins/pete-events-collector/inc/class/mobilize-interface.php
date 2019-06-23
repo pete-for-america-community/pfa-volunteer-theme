@@ -89,7 +89,10 @@ class APIInterface_Mobilize extends apiInterface {
                 $this->apiName, //$source, 
                 $event['browser_url'], //$link
                 $event['timeslots'][0]['start_date'], //$start_date
-                $event['timeslots'][0]['end_date'] //$start_date
+                $event['timeslots'][0]['end_date'], //$end_date
+                $event['location']['locality'], //$town, 
+                $event['location']['region'], //$state, 
+                $event['location']['postal_code'] //$zip, 
 
             );
         }
