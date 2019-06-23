@@ -55,12 +55,16 @@ class Event {
         $this->addressLines[] = $this->town . ', ' . $this->state . ' ' . $this->zip;
 
         // Determine if the api's original time format was UNIX or one of many string formats
-        $this->state_date = $this->prepareTime( $this->state_date );
+        if ( ! $start_date ) { 
+            $this->start_date = null; 
+        } else {
+            $this->start_date = $this->prepareTime( $start_date );
+        }
 
         if ( ! $end_date ) { 
             $this->end_date = null; 
         } else {
-            $this->end_date = $this->prepareTime( $this->state_date );
+            $this->end_date = $this->prepareTime( $end_date );
         }
         
     }
