@@ -9,18 +9,38 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+/* If you want to change the characteristics of any part of the infoBubble
+ * modify the appropriate section below.
+ */
+
+/* Overall class for the bubble */
 .bubble {
 }
 
 .bubbleHeader {
     font-size: 16px;
 }
+
+/* The entire text area in the bubble with all of the following sections within it */
 .bubbleText {
     font-family: Roboto, Arial, sans-serif;
     color: #1d253c;
     font-size: 12px;
     /* line-height: 25px; */
     padding: 4px 4px 4px 8px;
+}
+
+.bubbleDate {
+}
+
+.bubbleAddr {
+}
+
+.bubbleLink {
+}
+
+.bubbleContents {
 }
 
 .js-info-bubble-close {

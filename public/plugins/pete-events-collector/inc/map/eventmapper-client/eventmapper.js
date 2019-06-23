@@ -41,7 +41,7 @@ function locToString(loc) {
 // address: An array of strings representing the line by line text
 //          of the address of the event (string[])
 // description: Body of the content. (string)
-function buildContentString(name, date, address, description) {
+function buildContentString(name, date, address, link, description) {
 
     let whenString = "";
     if (date !== null) {
@@ -64,10 +64,15 @@ function buildContentString(name, date, address, description) {
         addrString += '<\p>';
     }
 
+    let linkString = "";
+    if (link !== null) {
+        linkString += `<p class="bubbleLink"><a href=${link} target="_blank">${link}</a></p>`;
+    }
     const cs = '<div class="bubbleText">' +
         `<h1 class="bubbleHeader">${name}</h1>` +
         addrString +
         whenString +
+        linkString +
         '<div class="bubbleContent">' +
         `<p>${description}</p>` +
         '</div>' +
@@ -113,11 +118,11 @@ function mapEvents(eventList) {
             if (DEBUG && e.address_lines === null) {
                 console.log("No address in event " + e.name);
             }
-            const contentString = buildContentString(e.name, date, e.address_lines, e.description);
+            const contentString = buildContentString(e.name, date, e.address_lines, e.link, e.description);
 
             infoBubble = new InfoBubble({
                 content: contentString,
-                maxWidth: 200,
+                maxWidth: 400,
                 minHeight: 10,
                 // This gap is necessary to avoid the bubble changing the target
                 // and causing a mouseout event (flicker of the bubble)
