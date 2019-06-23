@@ -1,7 +1,7 @@
 const DEBUG = true;
 const INC_ACTION_NETWORK = false;
 const INC_MOBILIZE = true;
-const USE_TEST_DATA = true;
+const USE_TEST_DATA = false;
 const TEST_DATA = "full-test-data.json";
 
 // Options file URI, pluginPath injected by PHP
