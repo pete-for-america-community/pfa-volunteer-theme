@@ -311,7 +311,7 @@ function initMap() {
 	let mElement = document.getElementById("map");
         map = new google.maps.Map(mElement, {	    
             zoom: 5,
-            center: { lat: 37.435851, lng: -122.133246 },
+            center: { lat: 37.897548, lng: -97.330796 },
             zoomControl: true,
             zoomControlOptions: {
                 position: google.maps.ControlPosition.RIGHT_CENTER
