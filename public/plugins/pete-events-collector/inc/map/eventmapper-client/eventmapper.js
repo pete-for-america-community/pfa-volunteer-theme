@@ -141,11 +141,12 @@ function mapEvents(eventList) {
                 path = mapOptionsFilename + path;
             }
 
+            const icon_scale_factor = 3;
             marker = new google.maps.Marker({
                 position: loc,
                 title: name,
                 map: map,
-                icon: { url: path, scaledSize: new google.maps.Size(50,50) },
+                icon: { url: path, scaledSize: new google.maps.Size(118/icon_scale_factor,158/icon_scale_factor) },
                 opacity: 0.7,
                 date: date
             });
