@@ -2,7 +2,7 @@
  /*
 Plugin Name: Pete Events Collector
 Description: A plugin to manage daily collection and caching of multiple events APIs, and provide a uniform interface to interact with them. Pete 2020!
-Version: 0.2
+Version: 1.0.0
 Author: http://github.com/users/jagp, https://github.com/dcsturman
 License: MIT
 */ 

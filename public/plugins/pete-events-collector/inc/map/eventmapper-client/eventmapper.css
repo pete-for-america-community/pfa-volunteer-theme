@@ -9,12 +9,20 @@ html, body {
     margin: 0;
     padding: 0;
 }
+
+/* If you want to change the characteristics of any part of the infoBubble
+ * modify the appropriate section below.
+ */
+
+/* Overall class for the bubble */
 .bubble {
 }
 
 .bubbleHeader {
     font-size: 16px;
 }
+
+/* The entire text area in the bubble with all of the following sections within it */
 .bubbleText {
     font-family: Roboto, Arial, sans-serif;
     color: #1d253c;
@@ -23,6 +31,35 @@ html, body {
     padding: 4px 4px 4px 8px;
 }
 
+.bubbleDate {
+}
+
+.bubbleAddr {
+}
+
+.bubbleLink {
+}
+
+.bubbleContents {
+}
+
 .js-info-bubble-close {
     visibility: hidden;
+}
+
+#control-panel {
+    box-shadow: 5px 5px 2px rgba(45, 58, 94, 0.4);
+    left: 20px
+}
+.control-panel-element {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 16px;
+    color: #616161;
+    background-color: #eef4f8;
+    display: block;
+    border: 1px solid #353535;
+    cursor: pointer;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
 }
