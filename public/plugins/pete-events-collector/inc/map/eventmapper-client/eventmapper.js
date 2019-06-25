@@ -1,6 +1,9 @@
 const DEBUG = true;
+// INC_ACTION_NETWORK should be true to include events from Action Network
 const INC_ACTION_NETWORK = false;
+// INC_MOBILIZE should be true to include events from Mobilize
 const INC_MOBILIZE = true;
+// USE_TEST_DATA should be true to use TEST_DATA file instead online data.
 const USE_TEST_DATA = false;
 const TEST_DATA = "full-test-data.json";
 
@@ -20,14 +23,13 @@ let map = null;
 // All the markers on the map (visible or not)
 let markers = [];
 
-// This is a boolean flag used to open/close bubbles
-// automatically with mouse attention.  If false,
-// then we use click behavior to toggle visibility.
-// False is the default behavior.
-// closeControl is the toggle button in the control
-// panel associated with managing this flag.
-let autoBubble = false;
-let closeControl = null;
+// Currently selected control (which should be highlighted)
+let currentControl = null;
+// All controls, indexed by string name
+let controls = [];
+
+const show_all_title = "Show All";
+const upcoming_only_title = "Upcoming Only";
 
 // Utility function useful for printing loc structures
 // on the console.
@@ -157,31 +159,18 @@ function mapEvents(eventList) {
 
 
         marker.addListener("click", function clickListener() {
-            if (!autoBubble) {
-                if (infoBubble.visible) {
-                    infoBubble.visible = false;
-                    infoBubble.close(map, marker);
-                } else {
-                    infoBubble.visible = true;
-                    google.maps.event.addListenerOnce(infoBubble, 'domready', function(){
-                        // WARNING: COMPLETE HACK
-                        // infoBubble.e is the compiled name for the content of the bubble.
-                        google.maps.event.addDomListener(infoBubble.e, 'click',
-                            clickListener);
-                    });
-                    infoBubble.open(map,marker);
-                }
-            }
-        })
-        marker.addListener("mouseover", function () {
-            if (autoBubble) {
-                infoBubble.open(map, marker);
-            }
-        });
-
-        marker.addListener("mouseout", function () {
-            if (autoBubble) {
+            if (infoBubble.visible) {
+                infoBubble.visible = false;
                 infoBubble.close(map, marker);
+            } else {
+                infoBubble.visible = true;
+                google.maps.event.addListenerOnce(infoBubble, 'domready', function(){
+                    // WARNING: COMPLETE HACK
+                    // infoBubble.e is the compiled name for the content of the bubble.
+                    google.maps.event.addDomListener(infoBubble.e, 'click',
+                        clickListener);
+                });
+                infoBubble.open(map,marker);
             }
         });
 
@@ -189,23 +178,13 @@ function mapEvents(eventList) {
     }
 }
 
-// toggleAutoBubble() turns on/off auto-open/close of InfoBubbles
-// on mouseover/mouseout events requiring clicks instead. Also
-// changes the color of the control accordingly.
-// This function is a callback for that control listener.
-function toggleAutoBubble() {
-    if (autoBubble) {
-        autoBubble = false;
-        closeControl.style.backgroundColor = "#fff";
-    } else {
-        autoBubble = true;
-        closeControl.style.backgroundColor = "#ccc";
-    }
-}
+
 
 // showAllMarkers() makes all markers visible on the map.
 // Used as the callback for that control listener.
 function showAllMarkers() {
+    toggleControlHighlight(currentControl, controls[show_all_title]);
+    currentControl = controls[show_all_title];
     for (let m of markers) {
         m.setVisible(true);
     }
@@ -214,6 +193,8 @@ function showAllMarkers() {
 // showFutureEvents() makes all markers in the past invisible.
 // Used as the call back for that control listener.
 function showFutureEvents() {
+    toggleControlHighlight(currentControl, controls[upcoming_only_title]);
+    currentControl = controls[upcoming_only_title];
     const now = Date.now();
     for (let m of markers) {
         if (m.date > now) {
@@ -243,8 +224,25 @@ function ShowControl(controlDiv, f, title) {
 
     // Setup the click event listeners: simply set the map to Chicago.
     controlUI.addEventListener("click", f);
+    controls[title] = controlUI;
 
     return controlUI;
+}
+
+const standard_color = "#fff";
+const highlight_color = "#ccc";
+
+
+
+// toggleControlHighlight switchs highlight color from one control to another.
+// Its legal for prev to be null if nothing was previously highlighted.
+// prev: control
+// next: control
+function toggleControlHighlight(prev, next) {
+    if (prev !== null) {
+        prev. style.backgroundColor = standard_color;
+    }
+    next.style.backgroundColor = highlight_color;
 }
 
 // setupControl() sets up the control panel on the map.
@@ -257,11 +255,10 @@ function setupControl() {
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(centerControlDiv);
 
     // Create global controls
-    ShowControl(centerControlDiv, showAllMarkers, "Show All");
-    ShowControl(centerControlDiv, showFutureEvents, "Upcoming Only");
+    currentControl = ShowControl(centerControlDiv, showAllMarkers, show_all_title);
+    ShowControl(centerControlDiv, showFutureEvents, upcoming_only_title);
 
-    // Removing the closeControl so that behavior is always on-click.
-    // closeControl = ShowControl(centerControlDiv, toggleAutoBubble, "DBG: Enable AutoBubble");
+    toggleControlHighlight(null, currentControl);
 }
 
 // drawMap() is called after events are parsed from JSON, then draws
