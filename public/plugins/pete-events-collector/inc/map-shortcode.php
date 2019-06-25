@@ -33,7 +33,7 @@ function register_map_shortcode( $args ){
     ob_start();
     ?>
     <!-- Inline CSS for map wrapper -->
-    <style>.events-map { height: 400px; }</style>
+    <style>.events-map { height: 650px; padding-top: 20px; }</style>
 
     <!-- Expose events API to the front end -->
     <script>
