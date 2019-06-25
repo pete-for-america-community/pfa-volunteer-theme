@@ -24,8 +24,8 @@ define( "SETTINGS_PAGE_FILENAME",                       "settings-page.php");
 define( "SECRET_KEY_FILENAME",                          "secret_api_keys.php");
 define( "FRONT_END_API_VAR_NAME",                       "eventsData");
 
-define( "DEBUG", TRUE );
-//define( "DEBUG", FALSE );
+//define( "DEBUG", TRUE );
+define( "DEBUG", FALSE );
 
 //Load plugin internals
 require_once plugin_dir_path( __FILE__ ) . "inc/class/api-interface.php";
