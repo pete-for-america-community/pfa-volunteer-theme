@@ -2,7 +2,7 @@
  /*
 Plugin Name: Pete Events Collector
 Description: A plugin to manage daily collection and caching of multiple events APIs, and provide a uniform interface to interact with them. Pete 2020!
-Version: 1.0.0
+Version: 1.0.1
 Author: http://github.com/users/jagp, https://github.com/dcsturman
 License: MIT
 */ 
@@ -24,8 +24,8 @@ define( "SETTINGS_PAGE_FILENAME",                       "settings-page.php");
 define( "SECRET_KEY_FILENAME",                          "secret_api_keys.php");
 define( "FRONT_END_API_VAR_NAME",                       "eventsData");
 
-define( "DEBUG", TRUE );
-//define( "DEBUG", FALSE );
+//define( "DEBUG", TRUE );
+define( "DEBUG", FALSE );
 
 //Load plugin internals
 require_once plugin_dir_path( __FILE__ ) . "inc/class/api-interface.php";
