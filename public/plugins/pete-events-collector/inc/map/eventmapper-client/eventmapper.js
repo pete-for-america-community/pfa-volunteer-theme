@@ -136,7 +136,12 @@ function mapEvents(eventList) {
 
             // WARNING: HACK
             // I'm not sure if this should be the same path or not.  Check with Jared.
-            let path = "Pete Face.svg";
+            let path = null;
+
+            if (date >= Date.now()) {
+                path = "Pete Face.svg";
+            } else path = "Past_Pete.svg";
+
             if (typeof mapOptionsFilename !== 'undefined') {
                 path = mapOptionsFilename + path;
             }
